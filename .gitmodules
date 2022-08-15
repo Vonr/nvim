@@ -1,0 +1,6 @@
+[submodule "lua/plugins/dev/align.nvim"]
+	path = lua/plugins/dev/align.nvim
+	url = https://github.com/Vonr/align.nvim
+[submodule "lua/plugins/dev/foldcus.nvim"]
+	path = lua/plugins/dev/foldcus.nvim
+	url = https://github.com/Vonr/foldcus.nvim
