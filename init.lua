@@ -6,3 +6,4 @@ require'opts'
 
 require'plugins'
 require'binds'
+require'commands'

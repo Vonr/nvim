@@ -24,6 +24,8 @@ map('n', '<S-Down>',  '}')
 map('n', '<S-Up>',    '{')
 map('n', 'zp',        'vipzf')
 map('n', 'yil',       'my^Y`y')
+map('n', '<Esc>',     '<cmd>noh<CR>')
+map('n', '<Leader>s', '<cmd>w<CR>')
 
 vim.keymap.set('n', 'K',        function() fx.showDocumentation() end, NS)
 vim.keymap.set('n', '<C-H>',    function() fx.endCreateLine()     end, NS)

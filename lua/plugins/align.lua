@@ -31,3 +31,18 @@ vim.keymap.set(
     NS
 )
 
+vim.keymap.set(
+    'n',
+    'gaW',
+    function()
+        local a = require'align'
+        a.operator(
+            a.align_to_string,
+            { reverse = true, preview = true },
+            function()
+                vim.cmd[[normal! gv]]
+            end
+        )
+    end,
+    NS
+)

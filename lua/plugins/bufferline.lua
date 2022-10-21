@@ -13,22 +13,22 @@ local function setup()
     vim.api.nvim_set_keymap("n", "bdd", "<cmd>bd<CR>", { noremap = true, silent = true })
 end
 
-local count = 0
+local count = 1
 vim.opt.showtabline = 0
-vim.api.nvim_create_autocmd('BufReadPre', {
+vim.api.nvim_create_autocmd('BufAdd', {
     callback = function()
         vim.schedule(function()
             count = count + 1
             if count > 1 and setup then
                 vim.opt.showtabline = 2
                 setup()
-                setup = nil
+                setup = function() end
             end
         end)
     end,
 })
 
-vim.api.nvim_create_autocmd('BufUnload', {
+vim.api.nvim_create_autocmd('BufDelete', {
     callback = function()
         vim.schedule(function()
             count = count - 1

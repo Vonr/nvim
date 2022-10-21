@@ -14,16 +14,22 @@ capabilities.textDocument.foldingRange = {
     lineFoldingOnly = true,
 }
 
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local default = {
   on_attach = function() end, autostart = true, capabilities = capabilities
 }
 
 local configs = {
-    pyright  = default,
-    bashls   = default,
-    tsserver = default,
+    pyright     = default,
+    bashls      = default,
+    tsserver    = default,
+    cssls       = default,
+    emmet_ls    = default,
+    eslint      = default,
+    html        = require'plugins/lspconfig/html',
+    hls         = require'plugins/lspconfig/hls',
+    sumneko_lua = require'plugins/lspconfig/sumneko_lua',
 }
 
 for server, opts in pairs(configs) do
@@ -86,10 +92,6 @@ cmp.setup({
             end
         end,
         ['<S-Tab>'] = function(fallback)
-            -- if require'luasnip'.choice_active() then
-            --     require'luasnip'.change_choice(-1)
-            -- elseif require'luasnip'.jumpable(-1) then
-            --     require'luasnip'.jump(-1)
             if cmp.visible() then
                 cmp.select_prev_item()
             else
@@ -112,6 +114,7 @@ cmp.setup({
         end,
     },
     sources = {
+        { name = 'cmp_tabnine' },
         { name = 'nvim_lsp' },
         { name = 'nvim_lsp_signature_help' },
         { name = 'luasnip' },
@@ -121,21 +124,21 @@ cmp.setup({
     formatting = {
         format = function(entry, vim_item)
             vim_item.menu = ({
-                    buffer                  = " ",
-                    nvim_lsp                = " ",
-                    luasnip                 = " ",
-                    latex_symbols           = "✕ ",
-                    nvim_lsp_signature_help = " ",
-                    treesitter              = "🌲",
-                    path                    = "📁",
-                })[entry.source.name]
+                nvim_lsp                = " ",
+                cmp_tabnine             = "🤖",
+                buffer                  = " ",
+                luasnip                 = " ",
+                latex_symbols           = "✕ ",
+                nvim_lsp_signature_help = " ",
+                treesitter              = "🌲",
+                path                    = "📁",
+            })[entry.source.name]
             vim_item.kind = ({
                 Variable = " ",
                 Field    = " ",
                 Function = " ",
                 Text     = " ",
             })[vim_item.kind]
-            Debug = vim_item
 
             return vim_item
         end,
@@ -150,9 +153,6 @@ vim.diagnostic.config({
     signs = { active = signs },
 })
 
--- vim.api.nvim_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', 'gx',         function() vim.lsp.buf.code_action()    end, { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>rn', function() vim.lsp.buf.rename()         end, { noremap = true, silent = true })
 vim.keymap.set('n', '<C-k>',      function() vim.lsp.buf.signature_help() end, { noremap = true, silent = true })
@@ -160,34 +160,6 @@ vim.keymap.set('n', '[g',         function() vim.diagnostic.goto_prev()   end, {
 vim.keymap.set('n', ']g',         function() vim.diagnostic.goto_next()   end, { noremap = true, silent = true })
 
 vim.o.updatetime = 300
-LastLspHoldPosition = nil
-vim.api.nvim_create_autocmd('CursorHold', {
-    callback = function()
-        local cursor = vim.api.nvim_win_get_cursor(0)
-        local newPos = {
-            cursor[1],
-            cursor[2],
-        }
-        if LastLspHoldPosition ~= nil and LastLspHoldPosition[1] == newPos[1] and LastLspHoldPosition[2] == newPos[2] then
-            return
-        end
-        LastLspHoldPosition = newPos
-        vim.diagnostic.open_float(nil, { focus=false, scope='cursor' })
-    end
-})
-
-local function lazyLspConfig(pattern, name)
-    if type(pattern) == 'string' then
-        pattern = {pattern}
-    end
-    vim.api.nvim_create_autocmd({'BufEnter', 'BufWinEnter'}, {
-        pattern = pattern,
-        callback = function()
-            vim.api.nvim_create_augroup("lsp_" .. name, { clear = true })
-            require('plugins/lspconfig/' .. name)
-        end,
-    })
-end
 
 local function lazyLspPlugin(pattern, plugin)
     if type(pattern) == 'string' then
@@ -202,9 +174,6 @@ local function lazyLspPlugin(pattern, plugin)
     })
 end
 
-lazyLspConfig('*.lua', 'sumneko_lua')
-lazyLspConfig('*.hs',  'hls')
-
 lazyLspPlugin('*.rs', 'rust-tools.nvim')
 lazyLspPlugin('*.go', 'go.nvim')
 lazyLspPlugin('*sh',  'null-ls.nvim')
@@ -213,4 +182,3 @@ lazyLspPlugin({ '*.java'
               , 'pom.xml'
               , 'build.gradle'
               }, 'nvim-jdtls')
-

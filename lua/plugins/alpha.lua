@@ -75,6 +75,7 @@ local buttons = {
         button("r", "  Recently opened files", "<cmd>PackerLoad fzf-lua<CR><cmd>lua _G.load_fzf_lua().oldfiles()<CR>", {}),
         button("w", "📖 Open Vimwiki index", "<cmd>VimwikiIndex<CR>", {}),
         button("u", "⬆  Update plugins", "<cmd>PackerSync<CR>", {}),
+        button("S", "  Save Snapshot", "<cmd>PackerSnapshot stable<CR>", {}),
         button("c", "⚙  Configuration", "<cmd>NERDTree ~/.config/nvim<CR>", {}),
         button("q", "❌ Exit Neovim", "<cmd>q<CR>", {}),
     },

@@ -44,13 +44,14 @@ return require'packer'.startup{
             'nvim-treesitter/playground',
             {
                 'ur4ltz/surround.nvim',
-                mappings = { 's' },
+                keys = { 's' },
                 config = function()
                     require"surround".setup { mappings_style = "sandwich" }
                 end
             },
             {
                 'github/copilot.vim',
+                event = "InsertCharPre",
                 config = function()
                     require'plugins/copilot'
                 end,
@@ -103,6 +104,7 @@ return require'packer'.startup{
             'hrsh7th/nvim-cmp',
             {
                 'L3MON4D3/LuaSnip',
+                event = "InsertCharPre",
                 config = function()
                     vim.schedule(function()
                         require'plugins/luasnip'
@@ -121,6 +123,10 @@ return require'packer'.startup{
             'ray-x/cmp-treesitter',
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-nvim-lsp-signature-help',
+	    {
+		'tzachar/cmp-tabnine',
+		run='./install.sh',
+	    },
             {
                 'saecki/crates.nvim',
                 event = { "BufRead Cargo.toml" },
@@ -289,6 +295,16 @@ return require'packer'.startup{
                 end,
             },
             {
+                'Pocco81/true-zen.nvim',
+                cmd = {
+                    'TZNarrow',
+                    'TZFocus',
+                    'TZMinimalist',
+                    'TZAtaraxis'
+                }
+            },
+
+            {
                 '~/.config/nvim/lua/plugins/dev/align.nvim',
                 config = function()
                     require'plugins/align'
@@ -306,7 +322,7 @@ return require'packer'.startup{
 
     config = {
         profile = {
-            enable = false
+            enable = true
         },
         display = {
             open_fn = require('packer.util').float,

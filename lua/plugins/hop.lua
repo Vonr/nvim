@@ -3,8 +3,8 @@ local dir = require'hop.hint'.HintDirection
 
 hop.setup { keys = 'asldfkqwerpomznxgjhitucbv' }
 
-vim.keymap.set({'n', 'v', 'i'}, 'gf', function() hop.hint_char1({ direction = nil, current_line_only = false }) end, {})
-vim.keymap.set({'n', 'v'}, '<Leader>gf', function() hop.hint_char1({ direction = nil, current_line_only = false }) end, {})
+vim.keymap.set({'n', 'v', 'i'}, '<C-q>', function() hop.hint_char1({ direction = nil, current_line_only = false }) end, {})
+vim.keymap.set({'n', 'v'}, '<Leader><C-q>', function() hop.hint_char1({ direction = nil, current_line_only = false }) end, {})
 vim.keymap.set('n', 'dqq', function() _G.hop_delete_to_char() end, {})
 vim.keymap.set('n', 'dqf', function() _G.hop_delete_to_char_line() end, {})
 vim.keymap.set('n', 'dqt', function() _G.hop_delete_until_char_line() end, {})
