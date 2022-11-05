@@ -123,10 +123,10 @@ return require'packer'.startup{
             'ray-x/cmp-treesitter',
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-nvim-lsp-signature-help',
-	    {
-		'tzachar/cmp-tabnine',
-		run='./install.sh',
-	    },
+            {
+                'tzachar/cmp-tabnine',
+                run='./install.sh',
+            },
             {
                 'saecki/crates.nvim',
                 event = { "BufRead Cargo.toml" },
