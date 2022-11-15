@@ -9,10 +9,7 @@ return require'packer'.startup{
             {
                 'mhdahmad/gruvbox.lua',
                 config = function()
-                    vim.api.nvim_cmd({
-                        cmd = "colorscheme",
-                        args = { "gruvbox" },
-                    })
+                    vim.cmd.colorscheme("gruvbox")
                 end,
             },
             {
@@ -41,7 +38,10 @@ return require'packer'.startup{
                     require'plugins/nvim-treesitter'
                 end,
             },
-            'nvim-treesitter/playground',
+            {
+                'nvim-treesitter/playground',
+                cmd = { 'TSPlaygroundToggle' },
+            },
             {
                 'ur4ltz/surround.nvim',
                 keys = { 's' },
@@ -104,7 +104,6 @@ return require'packer'.startup{
             'hrsh7th/nvim-cmp',
             {
                 'L3MON4D3/LuaSnip',
-                event = "InsertCharPre",
                 config = function()
                     vim.schedule(function()
                         require'plugins/luasnip'
@@ -140,7 +139,14 @@ return require'packer'.startup{
                     require'plugins/lsp'
                 end,
             },
-            'williamboman/nvim-lsp-installer',
+            {
+                'williamboman/nvim-lsp-installer',
+                cmd = {
+                    'LspInstall',
+                    'LspInstallInfo',
+                    'LspInstallLog',
+                }
+            },
             {
                 'lewis6991/spaceless.nvim',
                 config = function()
@@ -151,9 +157,9 @@ return require'packer'.startup{
                 'numToStr/Comment.nvim',
                 keys = {
                     {"n", "gc"},
-                    {"v", "gc"},
+                    {"x", "gc"},
                     {"n", "gc"},
-                    {"v", "gb"},
+                    {"x", "gb"},
                 },
                 config = function()
                     require'Comment'.setup()
@@ -190,7 +196,7 @@ return require'packer'.startup{
             },
             {
                 'iamcco/markdown-preview.nvim',
-                ft = [[markdown]],
+                ft = { "markdown" },
                 run = function()
                     vim.fn["mkdp#util#install"]()
                 end,
@@ -230,7 +236,7 @@ return require'packer'.startup{
             },
             {
                 'goolord/alpha-nvim',
-                config = function ()
+                config = function()
                     require'alpha'.setup(require'plugins/alpha'.config)
                 end
             },
@@ -290,9 +296,6 @@ return require'packer'.startup{
                 'ray-x/go.nvim',
                 opt = true,
                 requires = { 'ray-x/guihua.lua' },
-                config = function()
-                    require'plugins/lspconfig/go'
-                end,
             },
             {
                 'Pocco81/true-zen.nvim',
@@ -313,6 +316,9 @@ return require'packer'.startup{
             {
                 '~/.config/nvim/lua/plugins/dev/foldcus.nvim',
                 requires = { 'nvim-treesitter/nvim-treesitter' },
+                cmd = {
+                    'Foldcus'
+                },
                 config = function()
                     require'plugins/foldcus'
                 end,

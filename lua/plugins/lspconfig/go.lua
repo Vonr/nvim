@@ -1,12 +1,12 @@
-local client_id = vim.lsp.start_client({
+return {
     name = "gopls",
+    filetype = { "go" },
     cmd = {"gopls"},
-})
-
-require'go'.setup({
-    lsp_inlay_hints = {
-        enable = true,
-    }
-})
-
-vim.lsp.buf_attach_client(0, client_id)
+    on_init = function()
+        require'go'.setup({
+            lsp_inlay_hints = {
+                enable = true,
+            }
+        })
+    end
+}
