@@ -1,5 +1,8 @@
 return {
     'neovim/nvim-lspconfig',
+    ft = {
+        'python', 'bash', 'typescript', 'css', 'html', 'javascript', 'svelte', 'prisma', 'go', 'haskell', 'lua'
+    },
     config = function()
         ---@diagnostic disable: duplicate-set-field
         local config = require'lspconfig'
