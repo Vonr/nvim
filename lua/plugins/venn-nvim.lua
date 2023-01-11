@@ -1,6 +1,6 @@
 return {
     'jbyuki/venn.nvim',
-    opt = true,
+    lazy = true,
     init = function()
         local function toggle_venn()
             local venn_enabled = vim.inspect(vim.b.venn_enabled)

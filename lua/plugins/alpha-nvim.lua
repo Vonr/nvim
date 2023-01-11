@@ -1,6 +1,18 @@
 return {
     'goolord/alpha-nvim',
-    opt = true,
+    lazy = true,
+    init = function()
+        vim.api.nvim_create_augroup('AlphaLoad', {})
+        vim.api.nvim_create_autocmd({'BufEnter'},{
+            group = 'AlphaLoad',
+            callback = function()
+                if vim.fn.expand('%') == '' then
+                    require'alpha'
+                end
+                vim.api.nvim_clear_autocmds({ group = 'AlphaLoad' })
+            end
+        })
+    end,
     config = function()
         local if_nil = vim.F.if_nil
 
