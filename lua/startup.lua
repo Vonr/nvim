@@ -1,6 +1,3 @@
-require'impatient'
-require'impatient'.enable_profile()
-
 vim.cmd[[set runtimepath^=~/.vim runtimepath+=~/.vim/after]]
 vim.cmd[[let &packpath = &runtimepath]]
 

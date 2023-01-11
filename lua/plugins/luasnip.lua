@@ -1,8 +1,6 @@
-require('luasnip.loaders.from_lua').lazy_load({paths = os.getenv('HOME') .. '/.config/nvim/lua/snippets'})
+require('luasnip.loaders.from_lua').lazy_load({paths = vim.env.HOME .. '/.config/nvim/lua/snippets'})
 
-local luasnip = require('luasnip')
-
-luasnip.config.set_config({
+_G.load_luasnip().config.set_config({
     history = true,
     updateevents = "TextChanged,TextChangedI",
     enable_autosnippets = true,

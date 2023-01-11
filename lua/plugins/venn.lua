@@ -1,6 +1,4 @@
 local function toggle_venn()
-    vim.cmd'PackerLoad venn.nvim'
-
     local venn_enabled = vim.inspect(vim.b.venn_enabled)
     if venn_enabled == "nil" then
         vim.b.venn_enabled = true

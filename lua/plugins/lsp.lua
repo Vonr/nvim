@@ -1,6 +1,12 @@
+---@diagnostic disable: duplicate-set-field
 local config = require'lspconfig'
 local cmp = require'cmp'
-local luasnip = require'luasnip'
+
+_G.load_luasnip = function()
+    _G.luasnip = require'luasnip'
+    _G.load_luasnip = function() return _G.luasnip end
+    return _G.luasnip
+end
 
 local has_words_before = function()
   unpack = unpack or table.unpack
@@ -52,7 +58,7 @@ end
 cmp.setup({
     snippet = {
         expand = function(args)
-            require'luasnip'.lsp_expand(args.body)
+            _G.load_luasnip().lsp_expand(args.body)
         end
     },
     mapping = {
@@ -74,10 +80,10 @@ cmp.setup({
             end
         end, {'i', 's'}),
         ['<C-n>'] = cmp.mapping(function(fallback)
-            if luasnip.jumpable(1) then
-                luasnip.jump(1)
-            elseif require'luasnip'.expand_or_jumpable() then
-                luasnip.expand_or_jump()
+            if _G.load_luasnip().jumpable(1) then
+                _G.load_luasnip().jump(1)
+            elseif _G.load_luasnip().expand_or_jumpable() then
+                _G.load_luasnip().expand_or_jump()
             elseif cmp.visible() then
                 cmp.select_next_item()
             else
@@ -87,8 +93,8 @@ cmp.setup({
         ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
+            elseif _G.load_luasnip().expand_or_jumpable() then
+                _G.load_luasnip().expand_or_jump()
             elseif has_words_before() then
                 cmp.complete()
             else
@@ -96,8 +102,8 @@ cmp.setup({
             end
         end, {'i', 's'}),
         ['<C-p>'] = cmp.mapping(function(fallback)
-            if require'luasnip'.jumpable(-1) then
-                require'luasnip'.jump(-1)
+            if _G.load_luasnip().jumpable(-1) then
+                _G.load_luasnip().jump(-1)
             elseif cmp.visible() then
                 cmp.select_prev_item()
             else
@@ -112,15 +118,15 @@ cmp.setup({
             end
         end, {'i', 's'}),
         ['<S-Right>'] = cmp.mapping(function(fallback)
-            if require'luasnip'.jumpable(1) then
-                require'luasnip'.jump(1)
+            if _G.load_luasnip().jumpable(1) then
+                _G.load_luasnip().jump(1)
             else
                 fallback()
             end
         end, {'i', 's'}),
         ['<S-Left>'] = cmp.mapping(function(fallback)
-            if require'luasnip'.jumpable(-1) then
-                require'luasnip'.jump(-1)
+            if _G.load_luasnip().jumpable(-1) then
+                _G.load_luasnip().jump(-1)
             else
                 fallback()
             end
@@ -182,12 +188,13 @@ local function lazyLspPlugin(pattern, plugin)
         pattern = pattern,
         callback = function()
             vim.api.nvim_create_augroup("lsp_" .. plugin, { clear = true })
-            vim.cmd('PackerLoad ' .. plugin)
+            local _ = require(plugin)
+            vim.cmd'LspStart'
         end,
     })
 end
 
-lazyLspPlugin('*.rs', 'rust-tools.nvim')
-lazyLspPlugin('*.go', 'go.nvim')
+lazyLspPlugin('*.rs', 'rust-tools')
+lazyLspPlugin('*.go', 'go')
 
-lazyLspPlugin({ '*sh', "*.js", "*.ts" }, 'null-ls.nvim')
+lazyLspPlugin({ '*sh', "*.js", "*.ts" }, 'null-ls')

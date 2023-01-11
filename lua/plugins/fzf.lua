@@ -13,7 +13,6 @@ vim.keymap.set('n', 'gr', function() _G.load_fzf_lua().lsp_references() end, { n
 
 function _G.load_fzf_lua()
     _G.load_fzf_lua = function() return _G.fzf end
-    vim.cmd'PackerLoad fzf-lua'
     _G.fzf = require'fzf-lua'
     _G.fzf.setup {
         winopts = {

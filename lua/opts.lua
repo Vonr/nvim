@@ -7,7 +7,7 @@ local opt = vim.opt
 -- Vim Globals
 g.mapleader   = ' '
 g.belloff     = 'all'
-g.undodir     = os.getenv('HOME') .. '/.vim/undodir'
+g.undodir     = vim.env.HOME .. '/.vim/undodir'
 g.incsearch   = true
 g.autowrite   = true
 g.lazyredraw  = true

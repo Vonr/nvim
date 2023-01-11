@@ -20,7 +20,7 @@ return {
     before_init = function()
         local dir = vim.fn.expand('%:p:h')
         if vim.fn.match(dir, '^/home/[^/]+/.config/nvim/') then
-            local luadev = require('lua-dev')
+            local luadev = require('neodev')
             _G.luadev_config = luadev.setup({})
         end
     end

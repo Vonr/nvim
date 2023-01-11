@@ -1,6 +1,4 @@
 local function setup()
-    vim.cmd'PackerLoad bufferline.nvim'
-
     local bfl = require'bufferline'
     bfl.setup{}
 
