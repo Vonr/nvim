@@ -4,13 +4,6 @@ return {
     config = function()
         require('luasnip.loaders.from_lua').lazy_load({paths = vim.env.HOME .. '/.config/nvim/lua/snippets'})
 
-        _G.load_luasnip = function()
-            _G.luasnip = require'luasnip'
-            require'cmp-luasnip'
-            _G.load_luasnip = function() return _G.luasnip end
-            return _G.luasnip
-        end
-
         _G.load_luasnip().config.set_config({
             history = true,
             updateevents = "TextChanged,TextChangedI",

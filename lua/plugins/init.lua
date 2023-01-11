@@ -8,7 +8,6 @@ return {
 
     'lukas-reineke/indent-blankline.nvim',
 
-    'hrsh7th/nvim-cmp',
     {'saadparwaiz1/cmp_luasnip', lazy = true},
     'hrsh7th/cmp-nvim-lsp',
     'ray-x/cmp-treesitter',
