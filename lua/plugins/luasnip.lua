@@ -6,6 +6,7 @@ return {
 
         _G.load_luasnip = function()
             _G.luasnip = require'luasnip'
+            require'cmp-luasnip'
             _G.load_luasnip = function() return _G.luasnip end
             return _G.luasnip
         end

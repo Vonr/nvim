@@ -1,21 +1,35 @@
 return {
     'phaazon/hop.nvim',
+    lazy = true,
+    keys = {
+        {'<C-q>', mode = {'n', 'x', 'i'}},
+        {'<Leader><C-q>', mode = {'n', 'x', 'i'}},
+        {'dqq', mode = 'n'},
+        {'dqf', mode = 'n'},
+        {'dqt', mode = 'n'},
+        {'<Leader>qw', mode = {'n', 'x'}},
+        {'dfw', mode = 'n'},
+        {'<Leader>qr', mode = {'n', 'x'}},
+        {'dqr', mode = 'n'},
+        {'<Leader>qe', mode = {'n', 'x'}},
+        {'dqe', mode = 'n'},
+    },
     config = function()
         local hop = require'hop'
         local dir = require'hop.hint'.HintDirection
 
         hop.setup { keys = 'asldfkqwerpomznxgjhitucbv' }
 
-        vim.keymap.set({'n', 'v', 'i'}, '<C-q>', function() hop.hint_char1({ direction = nil, current_line_only = false }) end, {})
-        vim.keymap.set({'n', 'v'}, '<Leader><C-q>', function() hop.hint_char1({ direction = nil, current_line_only = false }) end, {})
+        vim.keymap.set({'n', 'x', 'i'}, '<C-q>', function() hop.hint_char1({ direction = nil, current_line_only = false }) end, {})
+        vim.keymap.set({'n', 'x'}, '<Leader><C-q>', function() hop.hint_char1({ direction = nil, current_line_only = false }) end, {})
         vim.keymap.set('n', 'dqq', function() _G.hop_delete_to_char() end, {})
         vim.keymap.set('n', 'dqf', function() _G.hop_delete_to_char_line() end, {})
         vim.keymap.set('n', 'dqt', function() _G.hop_delete_until_char_line() end, {})
-        vim.keymap.set({'n', 'v'}, '<Leader>qw', function() hop.hint_words({ direction = nil, current_line_only = false }) end, {})
+        vim.keymap.set({'n', 'x'}, '<Leader>qw', function() hop.hint_words({ direction = nil, current_line_only = false }) end, {})
         vim.keymap.set('n', 'dfw', function() _G.hop_delete_to_word() end, {})
-        vim.keymap.set({'n', 'v'}, '<Leader>qr', function() hop.hint_patterns({ direction = nil, current_line_only = false }) end, {})
+        vim.keymap.set({'n', 'x'}, '<Leader>qr', function() hop.hint_patterns({ direction = nil, current_line_only = false }) end, {})
         vim.keymap.set('n', 'dqr', function() _G.hop_delete_to_pattern() end, {})
-        vim.keymap.set({'n', 'v'}, '<Leader>qe', function() hop.hint_anywhere({ direction = nil, current_line_only = false }) end, {})
+        vim.keymap.set({'n', 'x'}, '<Leader>qe', function() hop.hint_anywhere({ direction = nil, current_line_only = false }) end, {})
         vim.keymap.set('n', 'dqe', function() _G.hop_delete_to_anywhere() end, {})
 
         local function delete_to(fn, opts, action)

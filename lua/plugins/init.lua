@@ -9,11 +9,9 @@ return {
     'lukas-reineke/indent-blankline.nvim',
 
     'hrsh7th/nvim-cmp',
-    'saadparwaiz1/cmp_luasnip',
+    {'saadparwaiz1/cmp_luasnip', lazy = true},
     'hrsh7th/cmp-nvim-lsp',
     'ray-x/cmp-treesitter',
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-nvim-lsp-signature-help',
-
-    'anuvyklack/hydra.nvim',
 }
