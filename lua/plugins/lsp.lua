@@ -1,8 +1,15 @@
 local config = require'lspconfig'
 local cmp = require'cmp'
+local luasnip = require'luasnip'
+
+local has_words_before = function()
+  unpack = unpack or table.unpack
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
 
 -- logged to ~/.cache/nvim/lsp.log
--- vim.lsp.set_log_level("debug")
+vim.lsp.set_log_level("ERROR")
 
 require('nvim-autopairs').setup{}
 local cmp_ap = require('nvim-autopairs.completion.cmp')
@@ -26,7 +33,11 @@ local configs = {
     tsserver    = default,
     cssls       = default,
     emmet_ls    = default,
-    eslint      = default,
+    ccls        = default,
+    svelte      = default,
+    tailwindcss = default,
+    prismals    = default,
+    pylsp       = default,
     gopls       = require'plugins/lspconfig/go',
     omnisharp   = require'plugins/lspconfig/omnisharp',
     html        = require'plugins/lspconfig/html',
@@ -55,36 +66,36 @@ cmp.setup({
         -- ['<Down>'] = cmp.mapping.close(),
         -- ['<Up>'] = cmp.mapping.close(),
         ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e>'] = function()
+        ['<C-e>'] = cmp.mapping(function()
             if vim.fn['copilot#GetDisplayedSuggestion']().text ~= "" then
                 vim.fn['copilot#Dismiss']()
             else
                 cmp.mapping.abort()
             end
-        end,
-        ['<C-n>'] = function(fallback)
-            if require'luasnip'.jumpable(1) then
-                require'luasnip'.jump(1)
+        end, {'i', 's'}),
+        ['<C-n>'] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(1) then
+                luasnip.jump(1)
             elseif require'luasnip'.expand_or_jumpable() then
-                require'luasnip'.expand_or_jump()
+                luasnip.expand_or_jump()
             elseif cmp.visible() then
                 cmp.select_next_item()
             else
                 fallback()
             end
-        end,
-        ['<Tab>'] = function(fallback)
-            -- if require'luasnip'.choice_active() then
-            --     require'luasnip'.change_choice(1)
-            -- elseif require'luasnip'.expand_or_jumpable() then
-            --     require'luasnip'.expand_or_jump()
+        end, {'i', 's'}),
+        ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            elseif has_words_before() then
+                cmp.complete()
             else
                 fallback()
             end
-        end,
-        ['<C-p>'] = function(fallback)
+        end, {'i', 's'}),
+        ['<C-p>'] = cmp.mapping(function(fallback)
             if require'luasnip'.jumpable(-1) then
                 require'luasnip'.jump(-1)
             elseif cmp.visible() then
@@ -92,28 +103,28 @@ cmp.setup({
             else
                 fallback()
             end
-        end,
-        ['<S-Tab>'] = function(fallback)
+        end, {'i', 's'}),
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
             else
                 fallback()
             end
-        end,
-        ['<S-Right>'] = function(fallback)
+        end, {'i', 's'}),
+        ['<S-Right>'] = cmp.mapping(function(fallback)
             if require'luasnip'.jumpable(1) then
                 require'luasnip'.jump(1)
             else
                 fallback()
             end
-        end,
-        ['<S-Left>'] = function(fallback)
+        end, {'i', 's'}),
+        ['<S-Left>'] = cmp.mapping(function(fallback)
             if require'luasnip'.jumpable(-1) then
                 require'luasnip'.jump(-1)
             else
                 fallback()
             end
-        end,
+        end, {'i', 's'}),
     },
     sources = {
         { name = 'cmp_tabnine' },
@@ -178,9 +189,5 @@ end
 
 lazyLspPlugin('*.rs', 'rust-tools.nvim')
 lazyLspPlugin('*.go', 'go.nvim')
-lazyLspPlugin('*sh',  'null-ls.nvim')
 
-lazyLspPlugin({ '*.java'
-              , 'pom.xml'
-              , 'build.gradle'
-              }, 'nvim-jdtls')
+lazyLspPlugin({ '*sh', "*.js", "*.ts" }, 'null-ls.nvim')

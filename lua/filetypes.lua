@@ -1,5 +1,6 @@
 vim.filetype.add({
     extension = {
+        [".gradle"] = "groovy",
     },
     filename = {
         ["picom.conf"] = "yaml",

@@ -12,10 +12,10 @@ vim.keymap.set('n', 'gO', function() _G.load_fzf_lua().lsp_workspace_diagnostics
 vim.keymap.set('n', 'gr', function() _G.load_fzf_lua().lsp_references() end, { noremap = true, silent = true })
 
 function _G.load_fzf_lua()
-    _G.load_fzf_lua = function() return FZF end
-    vim.cmd[[PackerLoad fzf-lua]]
-    FZF = require'fzf-lua'
-    FZF.setup {
+    _G.load_fzf_lua = function() return _G.fzf end
+    vim.cmd'PackerLoad fzf-lua'
+    _G.fzf = require'fzf-lua'
+    _G.fzf.setup {
         winopts = {
             hl = {
                 border = 'FloatBorder',
@@ -29,5 +29,5 @@ function _G.load_fzf_lua()
             },
         },
     }
-    return FZF
+    return _G.fzf
 end

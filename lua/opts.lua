@@ -42,7 +42,8 @@ opt.whichwrap = {
     b     = true,
     s     = true,
 }
-opt.iskeyword = '@,48-57,/,+,#,$,%,~,='
+opt.iskeyword = '@,48-57,$'
+
 
 -- Vim Buffer-specifics
 function vim.bset(name, value)

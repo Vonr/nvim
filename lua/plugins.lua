@@ -49,18 +49,18 @@ return require'packer'.startup{
                     require"surround".setup { mappings_style = "sandwich" }
                 end
             },
-            {
-                'github/copilot.vim',
-                event = "InsertCharPre",
-                config = function()
-                    require'plugins/copilot'
-                end,
-            },
-            {
-                'zbirenbaum/copilot.lua',
-                event = "InsertCharPre",
-                after = "nvim-cmp",
-            },
+            -- {
+            --     'github/copilot.vim',
+            --     event = "InsertCharPre",
+            --     config = function()
+            --         require'plugins/copilot'
+            --     end,
+            -- },
+            -- {
+            --     'zbirenbaum/copilot.lua',
+            --     event = "InsertCharPre",
+            --     after = "nvim-cmp",
+            -- },
             -- {
             --     "zbirenbaum/copilot-cmp",
             --     after = { "copilot.lua" },
@@ -87,7 +87,7 @@ return require'packer'.startup{
             },
             {
                 'mfussenegger/nvim-jdtls',
-                opt = true,
+                ft = { 'java' },
                 config = function()
                     require'plugins/lspconfig/jdtls'
                 end,
@@ -236,6 +236,7 @@ return require'packer'.startup{
             },
             {
                 'goolord/alpha-nvim',
+                opt = true,
                 config = function()
                     require'alpha'.setup(require'plugins/alpha'.config)
                 end
@@ -263,6 +264,9 @@ return require'packer'.startup{
                 end,
             },
             {
+                "MunifTanjim/nui.nvim",
+            },
+            {
                 'nvim-neo-tree/neo-tree.nvim',
                 branch = "v2.x",
                 cmd = {
@@ -283,7 +287,6 @@ return require'packer'.startup{
                     "NeoTreeShowInSplitToggle",
                     "NeoTreeShowToggle",
                 },
-                requires = { "MunifTanjim/nui.nvim" },
                 setup = function()
                     require'plugins/neotree'
                 end,
@@ -306,6 +309,7 @@ return require'packer'.startup{
                     'TZAtaraxis'
                 }
             },
+            'anuvyklack/hydra.nvim',
 
             {
                 '~/.config/nvim/lua/plugins/dev/align.nvim',

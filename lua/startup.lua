@@ -29,7 +29,6 @@ local disabled_built_ins = {
     'vimballPlugin',
     '2html_plugin',
     'logipat',
-    'remote_plugins',
     'rrhelper',
     'spellfile_plugin',
     'matchit'
