@@ -1,7 +1,7 @@
 return {
     'mhdahmad/gruvbox.lua',
+    event = "UIEnter",
     config = function()
         vim.cmd.colorscheme("gruvbox")
-        vim.cmd.colorscheme("gruvbox") -- This is not a mistake, for some reason it needs to be loaded twice to be correct
     end,
 }

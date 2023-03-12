@@ -5,7 +5,7 @@
 
 local M = {}
 
-M.showDocumentation = function()
+M.show_documentation = function()
     local filetype = vim.bo.filetype
     if vim.tbl_contains({ 'vim', 'help' }, filetype) then
         vim.cmd('h ' .. vim.fn.expand('<cword>'))
@@ -18,12 +18,12 @@ M.showDocumentation = function()
     end
 end
 
-M.endCreateLine = function()
+M.end_create_line = function()
     local cursor = vim.api.nvim_win_get_cursor(0)
     if vim.api.nvim_call_function("line", { "$" }) == cursor[1] then
         vim.api.nvim_input('o<Esc>')
     else
-        vim.api.nvim_input('j')
+        vim.api.nvim_input('<C-d>zz')
     end
 end
 

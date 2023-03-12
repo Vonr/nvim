@@ -1,14 +1,12 @@
 return {
     'neovim/nvim-lspconfig',
-    ft = {
-        'python', 'bash', 'typescript', 'css', 'html', 'javascript', 'svelte', 'prisma', 'go', 'haskell', 'lua'
-    },
+    event = 'BufRead',
     config = function()
         ---@diagnostic disable: duplicate-set-field
         local config = require'lspconfig'
 
         -- logged to ~/.cache/nvim/lsp.log
-        vim.lsp.set_log_level("ERROR")
+        vim.lsp.set_log_level('ERROR')
 
         local capabilities = vim.lsp.protocol.make_client_capabilities()
 
@@ -20,7 +18,9 @@ return {
         capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
         local default = {
-            on_attach = function() end, autostart = true, capabilities = capabilities
+            on_attach = function() end,
+            autostart = true,
+            capabilities = capabilities,
         }
 
         local configs = {
@@ -31,14 +31,14 @@ return {
             emmet_ls    = default,
             ccls        = default,
             svelte      = default,
-            tailwindcss = default,
             prismals    = default,
             pylsp       = default,
+            texlab      = default,
             gopls       = require'plugins/lspconfig/go',
             omnisharp   = require'plugins/lspconfig/omnisharp',
             html        = require'plugins/lspconfig/html',
             hls         = require'plugins/lspconfig/hls',
-            sumneko_lua = require'plugins/lspconfig/sumneko_lua',
+            lua_ls      = require'plugins/lspconfig/lua_ls',
         }
 
         for server, opts in pairs(configs) do
@@ -51,11 +51,13 @@ return {
             signs = { active = signs },
         })
 
-        vim.keymap.set('n', 'gx',         function() vim.lsp.buf.code_action()    end, { noremap = true, silent = true })
-        vim.keymap.set('n', '<Leader>rn', function() vim.lsp.buf.rename()         end, { noremap = true, silent = true })
-        vim.keymap.set('n', '<C-k>',      function() vim.lsp.buf.signature_help() end, { noremap = true, silent = true })
-        vim.keymap.set('n', '[g',         function() vim.diagnostic.goto_prev()   end, { noremap = true, silent = true })
-        vim.keymap.set('n', ']g',         function() vim.diagnostic.goto_next()   end, { noremap = true, silent = true })
+        vim.keymap.set('n', 'gx',         vim.lsp.buf.code_action,    { noremap = true, silent = true })
+        vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename,         { noremap = true, silent = true })
+        vim.keymap.set('n', '<C-k>',      vim.lsp.buf.signature_help, { noremap = true, silent = true })
+        vim.keymap.set('n', '[g',         vim.diagnostic.goto_prev,   { noremap = true, silent = true })
+        vim.keymap.set('n', 'g[',         vim.diagnostic.goto_prev,   { noremap = true, silent = true })
+        vim.keymap.set('n', 'g]',         vim.diagnostic.goto_next,   { noremap = true, silent = true })
+        vim.keymap.set('n', ']g',         vim.diagnostic.goto_next,   { noremap = true, silent = true })
 
         vim.o.updatetime = 300
 
@@ -73,9 +75,29 @@ return {
             })
         end
 
-        lazyLspPlugin('*.rs', 'rust-tools')
         lazyLspPlugin('*.go', 'go')
 
-        lazyLspPlugin({ '*sh', "*.js", "*.ts" }, 'null-ls')
+        lazyLspPlugin({
+            "css",
+            "graphql",
+            "html",
+            "javascript",
+            "javascriptreact",
+            "json",
+            "less",
+            "markdown",
+            "scss",
+            "typescript",
+            "typescriptreact",
+            "yaml",
+        }, 'null-ls')
     end,
+    dependencies = {
+        {
+            -- Can't lazy load neodev to my knowledge, see https://github.com/folke/lazy.nvim/issues/471
+            'folke/neodev.nvim',
+            ft = 'lua',
+            config = true,
+        }
+    }
 }

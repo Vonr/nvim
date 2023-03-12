@@ -4,7 +4,5 @@ return {
         {'gc', mode = {'n', 'x'}},
         {'gb', mode = {'n', 'x'}},
     },
-    config = function()
-        require'Comment'.setup()
-    end,
+    config = true
 }

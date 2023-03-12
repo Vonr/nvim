@@ -5,11 +5,14 @@ return {
     filetype = { "haskell" },
     cmd = {"haskell-language-server-wrapper", "--lsp"},
     before_init = function()
-        vim.bset('tabstop'    , 2)
-        vim.bset('softtabstop', 2)
-        vim.bset('shiftwidth' , 2)
+        vim.bo.tabstop = 2
+        vim.bo.softtabstop = 2
+        vim.bo.shiftwidth = 2
     end,
     on_init = function()
+        vim.bo.tabstop = 2
+        vim.bo.softtabstop = 2
+        vim.bo.shiftwidth = 2
         _G.pointfree = function()
             if vim.bo.filetype ~= 'haskell' then
                 return
@@ -18,7 +21,7 @@ return {
             local spaces = curline:match('^%s+') or ""
 
             coroutine.wrap(function ()
-                _G.load_fzf_lua().fzf_exec([[pointfree -v "]] .. vim.fn.escape(curline, '"') .. [[" | tail -n +4]], {
+                require'fzf-lua'.fzf_exec([[pointfree -v "]] .. vim.fn.escape(curline, '"') .. [[" | tail -n +4]], {
                     prompt = 'Pointfree ⟫ ',
                     actions = {
                         ['default'] = function(selected)

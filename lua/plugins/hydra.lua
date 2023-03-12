@@ -1,6 +1,5 @@
 return {
     'anuvyklack/hydra.nvim',
-    lazy = true,
     keys = {
         {'<Leader>f', mode = 'n'}
     },

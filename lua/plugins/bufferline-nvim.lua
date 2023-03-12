@@ -12,8 +12,6 @@ return {
             vim.keymap.set("n", "b[",  function() bfl.cycle(-1)         end, { noremap = true, silent = true })
             vim.keymap.set("n", "bb",  function() bfl.pick_buffer()     end, { noremap = true, silent = true })
             vim.keymap.set("n", "bp",  function() bfl.toggle_pin()      end, { noremap = true, silent = true })
-            vim.keymap.set("n", "bdc", function() bfl.close_with_pick() end, { noremap = true, silent = true })
-            vim.api.nvim_set_keymap("n", "bdd", "<cmd>bd<CR>", { noremap = true, silent = true })
         end
 
         local count = 1

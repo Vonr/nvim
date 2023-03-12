@@ -1,5 +1,6 @@
 return {
     'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
     config = function()
         local cmp = require'cmp'
 
@@ -12,58 +13,57 @@ return {
         cmp.setup({
             snippet = {
                 expand = function(args)
-                    _G.load_luasnip().lsp_expand(args.body)
+                    require'luasnip'.lsp_expand(args.body)
                 end
             },
-            mapping = {
+
+            mapping = cmp.mapping.preset.insert({
                 ['<C-k>'] = cmp.mapping.scroll_docs(-3),
-                ['<C-j>'] = cmp.mapping.scroll_docs(4),
+                ['<C-j>'] = cmp.mapping.scroll_docs(3),
+
                 ['<CR>'] = cmp.mapping.confirm({
                     behavior = cmp.ConfirmBehavior.Replace,
                     select = true
                 }),
+
                 ['<C-d>'] = cmp.mapping.close(),
-                -- ['<Down>'] = cmp.mapping.close(),
-                -- ['<Up>'] = cmp.mapping.close(),
                 ['<C-Space>'] = cmp.mapping.complete(),
-                ['<C-e>'] = cmp.mapping(function()
-                    if vim.fn['copilot#GetDisplayedSuggestion']().text ~= "" then
-                        vim.fn['copilot#Dismiss']()
-                    else
-                        cmp.mapping.abort()
-                    end
-                end, {'i', 's'}),
+                ['<C-e>'] = cmp.mapping.abort(),
+
                 ['<C-n>'] = cmp.mapping(function(fallback)
-                    if _G.load_luasnip().jumpable(1) then
-                        _G.load_luasnip().jump(1)
-                    elseif _G.load_luasnip().expand_or_jumpable() then
-                        _G.load_luasnip().expand_or_jump()
+                    if require'luasnip'.jumpable(1) then
+                        require'luasnip'.jump(1)
+                    elseif require'luasnip'.expand_or_jumpable() then
+                        require'luasnip'.expand_or_jump()
                     elseif cmp.visible() then
                         cmp.select_next_item()
                     else
                         fallback()
                     end
                 end, {'i', 's'}),
+
                 ['<Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
-                    elseif _G.load_luasnip().expand_or_jumpable() then
-                        _G.load_luasnip().expand_or_jump()
+                    elseif require'luasnip'.expand_or_jumpable() then
+                        require'luasnip'.expand_or_jump()
                     elseif has_words_before() then
                         cmp.complete()
                     else
                         fallback()
                     end
                 end, {'i', 's'}),
+
                 ['<C-p>'] = cmp.mapping(function(fallback)
-                    if _G.load_luasnip().jumpable(-1) then
-                        _G.load_luasnip().jump(-1)
+                    if require'luasnip'.jumpable(-1) then
+                        require'luasnip'.jump(-1)
                     elseif cmp.visible() then
                         cmp.select_prev_item()
                     else
                         fallback()
                     end
                 end, {'i', 's'}),
+
                 ['<S-Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_prev_item()
@@ -71,29 +71,32 @@ return {
                         fallback()
                     end
                 end, {'i', 's'}),
+
                 ['<S-Right>'] = cmp.mapping(function(fallback)
-                    if _G.load_luasnip().jumpable(1) then
-                        _G.load_luasnip().jump(1)
+                    if require'luasnip'.jumpable(1) then
+                        require'luasnip'.jump(1)
                     else
                         fallback()
                     end
                 end, {'i', 's'}),
+
                 ['<S-Left>'] = cmp.mapping(function(fallback)
-                    if _G.load_luasnip().jumpable(-1) then
-                        _G.load_luasnip().jump(-1)
+                    if require'luasnip'.jumpable(-1) then
+                        require'luasnip'.jump(-1)
                     else
                         fallback()
                     end
                 end, {'i', 's'}),
-            },
+            }),
+
             sources = {
                 { name = 'cmp_tabnine' },
                 { name = 'nvim_lsp' },
                 { name = 'nvim_lsp_signature_help' },
                 { name = 'luasnip' },
                 { name = 'path' },
-                { name = 'treesitter' },
             },
+
             formatting = {
                 format = function(entry, vim_item)
                     vim_item.menu = ({
@@ -103,9 +106,9 @@ return {
                         luasnip                 = " ",
                         latex_symbols           = "✕ ",
                         nvim_lsp_signature_help = " ",
-                        treesitter              = "🌲",
                         path                    = "📁",
                     })[entry.source.name]
+
                     vim_item.kind = ({
                         Variable = " ",
                         Field    = " ",
@@ -118,8 +121,43 @@ return {
             },
         })
 
-        require('nvim-autopairs').setup{}
         local cmp_ap = require('nvim-autopairs.completion.cmp')
-        cmp.event:on('confirm_done', cmp_ap.on_confirm_done({ map_char = { tex = '' }}))
-    end
+        cmp.event:on('confirm_done', cmp_ap.on_confirm_done({ map_char = { tex = '' } }))
+    end,
+    dependencies = {
+        {
+            'hrsh7th/cmp-nvim-lsp',
+            dependencies = {
+                'neovim/nvim-lspconfig',
+            }
+        },
+        'hrsh7th/cmp-path',
+        'hrsh7th/cmp-nvim-lsp-signature-help',
+        {
+            'saadparwaiz1/cmp_luasnip',
+            dependencies = {
+                {
+                    'L3MON4D3/LuaSnip',
+                    config = function()
+                        require('luasnip.loaders.from_lua').lazy_load({paths = vim.env.HOME .. '/.config/nvim/lua/snippets'})
+
+                        require'luasnip'.config.set_config({
+                            history = false,
+                            updateevents = "TextChanged,TextChangedI",
+                            enable_autosnippets = true,
+                        })
+
+                        vim.api.nvim_set_keymap("i", "<C-n>", "<Plug>luasnip-next-choice", {})
+                        vim.api.nvim_set_keymap("s", "<C-n>", "<Plug>luasnip-next-choice", {})
+                        vim.keymap.set('n', '<leader><C-s>', function() require("luasnip.loaders.from_lua").edit_snippet_files() end, { noremap = true, silent = true })
+                    end,
+                }
+            }
+        },
+        {
+            'tzachar/cmp-tabnine',
+            cmd = {'CmpTabnineHub', 'CmpTabnineHubUrl', 'CmpTabninePrefetch'},
+            build = './install.sh',
+        }
+    }
 }

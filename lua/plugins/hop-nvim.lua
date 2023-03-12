@@ -1,9 +1,8 @@
 return {
     'phaazon/hop.nvim',
-    lazy = true,
     keys = {
         {'<C-q>', mode = {'n', 'x', 'i'}},
-        {'<Leader><C-q>', mode = {'n', 'x', 'i'}},
+        {'<Leader><C-q>', mode = {'n', 'x'}},
         {'dqq', mode = 'n'},
         {'dqf', mode = 'n'},
         {'dqt', mode = 'n'},

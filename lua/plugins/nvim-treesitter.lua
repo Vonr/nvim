@@ -1,11 +1,14 @@
 return {
     'nvim-treesitter/nvim-treesitter',
-    init = function()
+    event = 'BufRead',
+    config = function()
         require'nvim-treesitter.configs'.setup {
             ignore_install = {}, -- List of parsers to ignore installing
             highlight = {
                 enable = true,
-                disable = {},
+                disable = {
+                    'latex'
+                },
                 additional_vim_regex_highlighting = {
                     'html'
                 },

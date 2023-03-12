@@ -6,7 +6,5 @@ return {
         'TodoTrouble',
         'TodoTelescope',
     },
-    config = function()
-        require'todo-comments'.setup{}
-    end,
+    opts = {}
 }

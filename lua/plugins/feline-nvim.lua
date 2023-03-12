@@ -1,7 +1,13 @@
 return {
-    'feline-nvim/feline.nvim',
+    'freddiehaddad/feline.nvim',
+    event = "UIEnter",
     config = function()
         local lsp = require('feline.providers.lsp')
+        local lsp_errors = 0
+        local lsp_warnings = 0
+        local lsp_hints = 0
+        local lsp_info = 0
+
         local vi_mode_utils = require('feline.providers.vi_mode')
 
         local force_inactive = {
@@ -11,19 +17,19 @@ return {
         }
 
         local colors = {
-            bg = '#282828',
-            black = '#282828',
-            yellow = '#d8a657',
-            cyan = '#89b482',
+            bg        = '#282828',
+            black     = '#282828',
+            yellow    = '#d8a657',
+            cyan      = '#89b482',
             oceanblue = '#45707a',
-            green = '#a9b665',
-            orange = '#e78a4e',
-            violet = '#d3869b',
-            magenta = '#c14a4a',
-            white = '#a89984',
-            fg = '#a89984',
-            skyblue = '#7daea3',
-            red = '#ea6962',
+            green     = '#a9b665',
+            orange    = '#e78a4e',
+            violet    = '#d3869b',
+            magenta   = '#c14a4a',
+            white     = '#a89984',
+            fg        = '#a89984',
+            skyblue   = '#7daea3',
+            red       = '#ea6962',
         }
 
         local vi_mode_colors = {
@@ -49,9 +55,7 @@ return {
             active = {
                 {
                     {
-                        provider = function()
-                            return vi_mode_utils.get_vim_mode()
-                        end,
+                        provider = vi_mode_utils.get_vim_mode,
                         hl = function()
                             return {
                                 fg = vi_mode_utils.get_mode_color(),
@@ -132,8 +136,11 @@ return {
                     },
 
                     {
-                        provider = 'diagnostic_errors',
-                        enabled = function() return lsp.diagnostics_exist(vim.diagnostic.severity.ERROR) end,
+                        provider = function()
+                            lsp_errors = lsp.get_diagnostics_count(vim.diagnostic.severity.ERROR)
+                            return lsp_errors
+                        end,
+                        enabled = function() return lsp_errors > 0 end,
                         hl = {
                             fg = 'red',
                             style = 'bold'
@@ -141,8 +148,11 @@ return {
                     },
 
                     {
-                        provider = 'diagnostic_warnings',
-                        enabled = function() return lsp.diagnostics_exist(vim.diagnostic.severity.WARN) end,
+                        provider = function()
+                            lsp_warnings = lsp.get_diagnostics_count(vim.diagnostic.severity.WARN)
+                            return lsp_warnings
+                        end,
+                        enabled = function() return lsp_warnings > 0 end,
                         hl = {
                             fg = 'yellow',
                             style = 'bold'
@@ -150,8 +160,11 @@ return {
                     },
 
                     {
-                        provider = 'diagnostic_hints',
-                        enabled = function() return lsp.diagnostics_exist(vim.diagnostic.severity.HINT) end,
+                        provider = function()
+                            lsp_hints = lsp.get_diagnostics_count(vim.diagnostic.severity.HINT)
+                            return lsp_hints
+                        end,
+                        enabled = function() return lsp_hints > 0 end,
                         hl = {
                             fg = 'cyan',
                             style = 'bold'
@@ -159,8 +172,11 @@ return {
                     },
 
                     {
-                        provider = 'diagnostic_info',
-                        enabled = function() return lsp.diagnostics_exist(vim.diagnostic.severity.INFO) end,
+                        provider = function()
+                            lsp_info = lsp.get_diagnostics_count(vim.diagnostic.severity.INFO)
+                            return lsp_info
+                        end,
+                        enabled = function() return lsp_info > 0 end,
                         hl = {
                             fg = 'skyblue',
                             style = 'bold'
@@ -237,7 +253,7 @@ return {
                     },
 
                     {
-                        provider = function() return '' .. vim.bo.fileformat:upper() .. '' end,
+                        provider = function() return vim.bo.fileformat:upper() end,
                         hl = {
                             fg = 'white',
                             bg = 'bg',

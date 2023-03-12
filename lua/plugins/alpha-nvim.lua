@@ -2,7 +2,7 @@ return {
     'goolord/alpha-nvim',
     lazy = true,
     init = function()
-        vim.api.nvim_create_augroup('AlphaLoad', {})
+        vim.api.nvim_create_augroup('AlphaLoad', { clear = true })
         vim.api.nvim_create_autocmd({'BufEnter'},{
             group = 'AlphaLoad',
             callback = function()
@@ -87,8 +87,8 @@ return {
             val = {
                 button("e", "  Edit buffer", "<cmd>bd<CR>", {}),
                 button("n", "➕ New file", "<cmd>lua vim.ui.input({}, function(s) vim.cmd([[e ]] .. s) end)<CR>", {}),
-                button("f", "  Find file", "<cmd>lua _G.load_fzf_lua().files()<CR>", {}),
-                button("r", "  Recently opened files", "<cmd>lua _G.load_fzf_lua().oldfiles()<CR>", {}),
+                button("f", "  Find file", "<cmd>lua require'fzf-lua'.files()<CR>", {}),
+                button("r", "  Recently opened files", "<cmd>lua require'fzf-lua'.oldfiles()<CR>", {}),
                 button("w", "📖 Open Vimwiki index", "<cmd>VimwikiIndex<CR>", {}),
                 button("u", "⬆  Update plugins", "<cmd>Lazy sync<CR>", {}),
                 button("c", "⚙  Configuration", "<cmd>NERDTree ~/.config/nvim<CR>", {}),

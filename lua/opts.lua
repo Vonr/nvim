@@ -13,9 +13,9 @@ g.autowrite   = true
 g.lazyredraw  = true
 g.backup      = false
 opt.swapfile  = false
--- opt.background = 'dark'
 opt.termguicolors = true
 opt.clipboard = 'unnamedplus'
+opt.guifont = 'FantasqueSansMono Nerd Font:h12'
 
 g.clipboard = {
     name = "xsel",

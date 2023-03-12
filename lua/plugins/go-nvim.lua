@@ -1,6 +1,5 @@
 return {
     'ray-x/go.nvim',
-    lazy = true,
     ft = {'go'},
     dependencies = { 'ray-x/guihua.lua' },
     config = function()

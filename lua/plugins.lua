@@ -13,11 +13,33 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-_G.load_luasnip = function()
-    _G.luasnip = require'luasnip'
-    require'cmp-luasnip'
-    _G.load_luasnip = function() return _G.luasnip end
-    return _G.luasnip
-end
-
-return require'lazy'.setup('plugins')
+return require'lazy'.setup('plugins', {
+    performance = {
+        reset_packpath = true,
+        rtp = {
+            reset = true,
+            paths = {},
+            disabled_plugins = {
+                'netrw',
+                'netrwPlugin',
+                'netrwSettings',
+                'netrwFileHandlers',
+                'gzip',
+                'zip',
+                'zipPlugin',
+                'tar',
+                'tarPlugin',
+                'tutor_mode_plugin',
+                'getscript',
+                'getscriptPlugin',
+                'vimball',
+                'vimballPlugin',
+                '2html_plugin',
+                'logipat',
+                'rrhelper',
+                'spellfile_plugin',
+                'matchit'
+            },
+        },
+    },
+})

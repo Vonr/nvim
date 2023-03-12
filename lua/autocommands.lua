@@ -7,3 +7,10 @@ vim.api.nvim_create_autocmd({'BufEnter'},{
         vim.bo.expandtab = true
     end
 })
+
+vim.api.nvim_create_autocmd({'BufEnter'},{
+    pattern = { 'Makefile' },
+    callback = function()
+        vim.bo.expandtab = false
+    end
+})
