@@ -34,6 +34,7 @@ return {
             prismals    = default,
             pylsp       = default,
             texlab      = default,
+            zls         = default,
             gopls       = require'plugins/lspconfig/go',
             omnisharp   = require'plugins/lspconfig/omnisharp',
             html        = require'plugins/lspconfig/html',

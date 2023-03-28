@@ -43,4 +43,13 @@ M.capture = function(cmd, raw)
     return s
 end
 
+M.string_split = function(str, delim)
+    delim = delim or "%s"
+    local t = {}
+    for match in string.gmatch(str, "([^" .. delim .. "]+)") do
+        table.insert(t, match)
+    end
+    return t
+end
+
 return M

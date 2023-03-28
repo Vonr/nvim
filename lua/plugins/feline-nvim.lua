@@ -137,10 +137,12 @@ return {
 
                     {
                         provider = function()
-                            lsp_errors = lsp.get_diagnostics_count(vim.diagnostic.severity.ERROR)
-                            return lsp_errors
+                            return " " .. lsp_errors
                         end,
-                        enabled = function() return lsp_errors > 0 end,
+                        enabled = function()
+                            lsp_errors = lsp.get_diagnostics_count(vim.diagnostic.severity.ERROR)
+                            return lsp_errors > 0
+                        end,
                         hl = {
                             fg = 'red',
                             style = 'bold'
@@ -149,10 +151,12 @@ return {
 
                     {
                         provider = function()
-                            lsp_warnings = lsp.get_diagnostics_count(vim.diagnostic.severity.WARN)
-                            return lsp_warnings
+                            return " " .. lsp_warnings
                         end,
-                        enabled = function() return lsp_warnings > 0 end,
+                        enabled = function()
+                            lsp_warnings = lsp.get_diagnostics_count(vim.diagnostic.severity.WARN)
+                            return lsp_warnings > 0
+                        end,
                         hl = {
                             fg = 'yellow',
                             style = 'bold'
@@ -161,10 +165,12 @@ return {
 
                     {
                         provider = function()
-                            lsp_hints = lsp.get_diagnostics_count(vim.diagnostic.severity.HINT)
-                            return lsp_hints
+                            return " " .. lsp_hints
                         end,
-                        enabled = function() return lsp_hints > 0 end,
+                        enabled = function()
+                            lsp_hints = lsp.get_diagnostics_count(vim.diagnostic.severity.HINT)
+                            return lsp_hints > 0
+                        end,
                         hl = {
                             fg = 'cyan',
                             style = 'bold'
@@ -173,10 +179,12 @@ return {
 
                     {
                         provider = function()
-                            lsp_info = lsp.get_diagnostics_count(vim.diagnostic.severity.INFO)
-                            return lsp_info
+                            return " " .. lsp_info
                         end,
-                        enabled = function() return lsp_info > 0 end,
+                        enabled = function()
+                            lsp_info = lsp.get_diagnostics_count(vim.diagnostic.severity.INFO)
+                            return lsp_info > 0
+                        end,
                         hl = {
                             fg = 'skyblue',
                             style = 'bold'
