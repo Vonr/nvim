@@ -1,5 +1,6 @@
 local tab_widths = {
-    haskell = 2
+    haskell = 2,
+    dart = 2,
 }
 
 vim.api.nvim_create_autocmd('FileType', {

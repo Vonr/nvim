@@ -1,5 +1,5 @@
 return {
     'ethanholz/nvim-lastplace',
-    event = 'BufRead',
+    event = 'BufReadPre',
     opts = {}
 }

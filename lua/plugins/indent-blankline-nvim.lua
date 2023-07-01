@@ -1,4 +1,6 @@
 return {
     'lukas-reineke/indent-blankline.nvim',
-    event = 'VeryLazy'
+    dependencies = {
+        'mhdahmad/gruvbox.lua',
+    }
 }

@@ -1,3 +1,5 @@
+---@diagnostic disable: assign-type-mismatch
+
 return {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
@@ -17,7 +19,7 @@ return {
                 end
             },
 
-            mapping = cmp.mapping.preset.insert({
+            mapping = {
                 ['<C-k>'] = cmp.mapping.scroll_docs(-3),
                 ['<C-j>'] = cmp.mapping.scroll_docs(3),
 
@@ -33,7 +35,7 @@ return {
                 ['<C-n>'] = cmp.mapping(function(fallback)
                     if require'luasnip'.jumpable(1) then
                         require'luasnip'.jump(1)
-                    elseif require'luasnip'.expand_or_jumpable() then
+                    elseif require'luasnip'.expand_or_locally_jumpable() then
                         require'luasnip'.expand_or_jump()
                     elseif cmp.visible() then
                         cmp.select_next_item()
@@ -45,7 +47,7 @@ return {
                 ['<Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
-                    elseif require'luasnip'.expand_or_jumpable() then
+                    elseif require'luasnip'.expand_or_locally_jumpable() then
                         require'luasnip'.expand_or_jump()
                     elseif has_words_before() then
                         cmp.complete()
@@ -87,10 +89,9 @@ return {
                         fallback()
                     end
                 end, {'i', 's'}),
-            }),
+            },
 
             sources = {
-                { name = 'cmp_tabnine' },
                 { name = 'nvim_lsp' },
                 { name = 'nvim_lsp_signature_help' },
                 { name = 'luasnip' },
@@ -101,7 +102,6 @@ return {
                 format = function(entry, vim_item)
                     vim_item.menu = ({
                         nvim_lsp                = " ",
-                        cmp_tabnine             = "🤖",
                         buffer                  = " ",
                         luasnip                 = " ",
                         latex_symbols           = "✕ ",
@@ -112,7 +112,7 @@ return {
                     vim_item.kind = ({
                         Variable = " ",
                         Field    = " ",
-                        Function = " ",
+                        Function = "󰊕 ",
                         Text     = " ",
                     })[vim_item.kind]
 
@@ -154,10 +154,5 @@ return {
                 }
             }
         },
-        {
-            'tzachar/cmp-tabnine',
-            cmd = {'CmpTabnineHub', 'CmpTabnineHubUrl', 'CmpTabninePrefetch'},
-            build = './install.sh',
-        }
     }
 }

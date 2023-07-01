@@ -1,8 +1,7 @@
 return {
     'nvim-treesitter/nvim-treesitter',
-    event = 'BufRead',
     config = function()
-        require'nvim-treesitter.configs'.setup {
+        require'nvim-treesitter.configs'.setup({
             ignore_install = {}, -- List of parsers to ignore installing
             highlight = {
                 enable = true,
@@ -30,6 +29,13 @@ return {
                 -- Instead of true it can also be a list of languages
                 additional_vim_regex_highlighting = false,
             },
-        }
+            playground = {
+                enable = true,
+            },
+        })
+
+        -- Custom highlights
+        vim.api.nvim_set_hl(0, "@type.qualifier.dart", { link = "Label" })
+        vim.api.nvim_set_hl(0, "@attribute.dart", { link = "Identifier" })
     end,
 }

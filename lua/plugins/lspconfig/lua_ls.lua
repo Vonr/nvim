@@ -7,6 +7,9 @@ return {
             telemetry = {
                 enable = false,
             },
+            workspace = {
+                checkThirdParty = false
+            },
         },
     },
     before_init = function() return require("neodev.lsp").before_init() end,

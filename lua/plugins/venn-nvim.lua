@@ -27,6 +27,6 @@ return {
             end
         end
         -- toggle keymappings for venn using <leader>v
-        vim.keymap.set('n', '<leader>v', function() toggle_venn(); vim.api.nvim_input('$') end, { noremap = true})
+        vim.keymap.set('n', '<leader>vv', function() toggle_venn(); vim.api.nvim_input('$') end, { noremap = true})
     end,
 }

@@ -2,8 +2,8 @@ return {
     'phaazon/hop.nvim',
     lazy = true,
     init = function()
-        vim.keymap.set({'n', 'x', 'i'}, '<C-q>', function() require('hop').hint_char1({ direction = nil, current_line_only = false }) end, {})
-        vim.keymap.set({'n', 'x'}, '<Leader><C-q>', function() require('hop').hint_char1({ direction = nil, current_line_only = false }) end, {})
+        vim.keymap.set({'n', 'x', 'i'}, '<C-s>', function() require('hop').hint_char1({ direction = nil, current_line_only = false }) end, {})
+        vim.keymap.set({'n', 'x'}, '<Leader><C-s>', function() require('hop').hint_char1({ direction = nil, current_line_only = false }) end, {})
         vim.keymap.set('n', 'dqq', function() _G.hop_delete_to_char() end, {})
         vim.keymap.set('n', 'dqf', function() _G.hop_delete_to_char_line() end, {})
         vim.keymap.set('n', 'dqt', function() _G.hop_delete_until_char_line() end, {})

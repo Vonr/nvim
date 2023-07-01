@@ -7,7 +7,7 @@ local opt = vim.opt
 -- Vim Globals
 g.mapleader   = ' '
 g.belloff     = 'all'
-g.undodir     = vim.env.HOME .. '/.vim/undodir'
+g.undodir     = vim.env.HOME .. '/.cache/nvim/undodir'
 g.incsearch   = true
 g.autowrite   = true
 g.lazyredraw  = true
@@ -15,7 +15,7 @@ g.backup      = false
 opt.swapfile  = false
 opt.termguicolors = true
 opt.clipboard = 'unnamedplus'
-opt.guifont = 'FantasqueSansMono Nerd Font:h12'
+opt.guifont = 'FantasqueSansM Nerd Font:h12'
 
 g.clipboard = {
     name = "xsel",
@@ -42,7 +42,7 @@ opt.whichwrap = {
     b     = true,
     s     = true,
 }
-opt.iskeyword = '@,48-57,$'
+opt.iskeyword = '@,48-57,_,192-255'
 
 
 -- Vim Buffer-specifics

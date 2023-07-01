@@ -88,7 +88,7 @@ return {
                 button("e", "  Edit buffer", "<cmd>bd<CR>", {}),
                 button("n", "➕ New file", "<cmd>lua vim.ui.input({}, function(s) vim.cmd([[e ]] .. s) end)<CR>", {}),
                 button("f", "  Find file", "<cmd>lua require'telescope.builtin'.find_files()<CR>", {}),
-                button("r", "  Recently opened files", "<cmd>lua require'telescope.builtin'.oldfiles()<CR>", {}),
+                button("r", "󰑓  Recently opened files", "<cmd>lua require'telescope.builtin'.oldfiles()<CR>", {}),
                 button("w", "📖 Open Vimwiki index", "<cmd>VimwikiIndex<CR>", {}),
                 button("u", "⬆  Update plugins", "<cmd>Lazy sync<CR>", {}),
                 button("c", "⚙  Configuration", "<cmd>Neotree float ~/.config/nvim<CR>", {}),
