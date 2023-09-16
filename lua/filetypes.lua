@@ -7,10 +7,11 @@ end,
 ---@diagnostic disable-next-line: redundant-value
 vim.filetype.add({
     extension = {
-        ['gradle'] = 'groovy',
-        ['cl']     = 'c',
-        ['wgsl']   = 'wgsl',
-        ['hlsl']   = 'hlsl',
+        ['gradle']  = 'groovy',
+        ['cl']      = 'c',
+        ['wgsl']    = 'wgsl',
+        ['hlsl']    = 'hlsl',
+        ['postcss'] = 'css',
     },
     filename = {
         ['picom.conf'] = 'yaml',

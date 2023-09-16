@@ -1,11 +1,7 @@
 return {
     'neovim/nvim-lspconfig',
-    event = 'FileType',
+    event = 'BufRead',
     config = function()
-        if vim.bo.filetype == "lua" then
-            require("neodev").setup()
-        end
-
         ---@diagnostic disable: duplicate-set-field
         local config = require'lspconfig'
 
@@ -55,7 +51,6 @@ return {
         end
 
         local configs = {
-            pyright       = default,
             bashls        = default,
             tsserver      = default,
             cssls         = default,
@@ -68,10 +63,22 @@ return {
             zls           = default,
             eslint        = default,
             wgsl_analyzer = default,
+            tailwindcss   = default,
             gopls         = external('go'),
             html          = external('html'),
             lua_ls        = external('lua_ls'),
         }
+
+        local lua_loaded = false
+        vim.api.nvim_create_autocmd('FileType', {
+            pattern = 'lua',
+            callback = function()
+                if lua_loaded then return end
+                require("neodev").setup()
+                config['lua_ls'].setup(external('lua_ls'))
+                lua_loaded = true
+            end
+        })
 
         for server, opts in pairs(configs) do
             config[server].setup(opts)
@@ -124,6 +131,7 @@ return {
     dependencies = {
         {
             'ErichDonGubler/lsp_lines.nvim',
+            lazy = true,
             config = true,
         },
         'windwp/nvim-autopairs',

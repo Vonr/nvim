@@ -3,6 +3,7 @@ return {
     lazy = true,
     init = function()
         local function toggle_venn()
+            require('venn')
             local venn_enabled = vim.inspect(vim.b.venn_enabled)
             if venn_enabled == "nil" then
                 vim.b.venn_enabled = true

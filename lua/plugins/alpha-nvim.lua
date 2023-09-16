@@ -3,7 +3,7 @@ return {
     lazy = true,
     init = function()
         vim.api.nvim_create_augroup('AlphaLoad', { clear = true })
-        vim.api.nvim_create_autocmd({'BufEnter'},{
+        vim.api.nvim_create_autocmd('BufEnter', {
             group = 'AlphaLoad',
             callback = function()
                 if vim.fn.expand('%') == '' then

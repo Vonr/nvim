@@ -16,40 +16,79 @@ return {
             bufnames  = {}
         }
 
-        local colors = {
-            bg        = '#282828',
-            black     = '#282828',
-            yellow    = '#d8a657',
-            cyan      = '#89b482',
-            oceanblue = '#45707a',
-            green     = '#a9b665',
-            orange    = '#e78a4e',
-            violet    = '#d3869b',
-            magenta   = '#c14a4a',
-            white     = '#a89984',
-            fg        = '#a89984',
-            skyblue   = '#7daea3',
-            red       = '#ea6962',
-        }
+        local colors
+        local vi_mode_colors
 
-        local vi_mode_colors = {
-            NORMAL        = 'green',
-            OP            = 'green',
-            INSERT        = 'red',
-            CONFIRM       = 'red',
-            VISUAL        = 'skyblue',
-            LINES         = 'skyblue',
-            BLOCK         = 'skyblue',
-            REPLACE       = 'violet',
-            ['V-REPLACE'] = 'violet',
-            ENTER         = 'cyan',
-            MORE          = 'cyan',
-            SELECT        = 'orange',
-            COMMAND       = 'green',
-            SHELL         = 'green',
-            TERM          = 'green',
-            NONE          = 'yellow'
-        }
+        if vim.g.colors_name == 'kanagawa' then
+            local palette = _G.Theme.palette
+            local theme = _G.Theme.theme
+            colors = {
+                bg        = theme.ui.bg,
+                yellow    = theme.syn.identifier,
+                cyan      = theme.diag.info,
+                green     = palette.springGreen,
+                orange    = palette.lotusOrange2,
+                violet    = palette.dragonViolet,
+                white     = theme.ui.fg_dim,
+                fg        = theme.ui.fg,
+                skyblue   = theme.diag.hint,
+                red       = palette.peachRed,
+            }
+
+            vi_mode_colors = {
+                NORMAL        = 'green',
+                OP            = 'green',
+                INSERT        = 'red',
+                CONFIRM       = 'red',
+                VISUAL        = 'skyblue',
+                LINES         = 'skyblue',
+                BLOCK         = 'skyblue',
+                REPLACE       = 'violet',
+                ['V-REPLACE'] = 'violet',
+                ENTER         = 'cyan',
+                MORE          = 'cyan',
+                SELECT        = 'orange',
+                COMMAND       = 'green',
+                SHELL         = 'green',
+                TERM          = 'green',
+                NONE          = 'yellow'
+            }
+        else
+            colors = {
+                bg        = '#282828',
+                black     = '#282828',
+                yellow    = '#d8a657',
+                cyan      = '#89b482',
+                oceanblue = '#45707a',
+                green     = '#a9b665',
+                orange    = '#e78a4e',
+                violet    = '#d3869b',
+                magenta   = '#c14a4a',
+                white     = '#a89984',
+                fg        = '#a89984',
+                skyblue   = '#7daea3',
+                red       = '#ea6962',
+            }
+
+            vi_mode_colors = {
+                NORMAL        = 'green',
+                OP            = 'green',
+                INSERT        = 'red',
+                CONFIRM       = 'red',
+                VISUAL        = 'skyblue',
+                LINES         = 'skyblue',
+                BLOCK         = 'skyblue',
+                REPLACE       = 'violet',
+                ['V-REPLACE'] = 'violet',
+                ENTER         = 'cyan',
+                MORE          = 'cyan',
+                SELECT        = 'orange',
+                COMMAND       = 'green',
+                SHELL         = 'green',
+                TERM          = 'green',
+                NONE          = 'yellow'
+            }
+        end
 
         local components = {
             active = {
@@ -273,33 +312,7 @@ return {
             },
 
             inactive = {
-                {
-                    {
-                        provider = 'file_type',
-                        hl = {
-                            fg = 'black',
-                            bg = 'cyan',
-                            style = 'bold'
-                        },
-                        left_sep = {
-                            str = ' ',
-                            hl = {
-                                fg = 'NONE',
-                                bg = 'cyan'
-                            }
-                        },
-                        right_sep = {
-                            {
-                                str = ' ',
-                                hl = {
-                                    fg = 'NONE',
-                                    bg = 'cyan'
-                                }
-                            },
-                            ' '
-                        }
-                    }
-                },
+                {},
 
                 {},
 

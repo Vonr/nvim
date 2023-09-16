@@ -1,3 +1,5 @@
+package.path = package.path .. ';' .. vim.env.HOME .. '/.luarocks/share/lua/5.1/?/init.lua;' .. vim.env.HOME .. '/.luarocks/share/lua/5.1/?.lua'
+
 vim.o.foldenable = false
 
 local g = vim.g

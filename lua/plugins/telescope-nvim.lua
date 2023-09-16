@@ -34,7 +34,7 @@ return {
     init = function()
         ---@diagnostic disable: duplicate-set-field
         vim.keymap.set('n', '//', function() require'telescope.builtin'.current_buffer_fuzzy_find() end, { noremap = true, silent = true})
-        vim.keymap.set('n', '<C-_><C-_>', function() require'telescope.builtin'.live_grep() end, { noremap = true, silent = true})
+        vim.keymap.set('n', '??', function() require'telescope.builtin'.live_grep() end, { noremap = true, silent = true})
         vim.keymap.set('n', '<C-P>', function() require'telescope.builtin'.find_files() end, { noremap = true, silent = true})
 
         -- LSP

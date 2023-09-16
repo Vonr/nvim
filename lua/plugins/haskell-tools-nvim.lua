@@ -1,11 +1,11 @@
 return {
     'https://github.com/mrcjkb/haskell-tools.nvim',
     ft = "haskell",
-    branch = "1.x.x",
+    branch = "2.x.x",
     config = function()
         local ht = require('haskell-tools')
         local def_opts = { noremap = true, silent = true }
-        ht.start_or_attach {
+        vim.g.haskell_tools = {
             hls = {
                 name = "hls",
                 filetype = { "haskell" },

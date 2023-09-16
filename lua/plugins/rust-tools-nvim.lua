@@ -1,6 +1,6 @@
 return {
     'simrat39/rust-tools.nvim',
-    ft = { 'rust' },
+    event = { "BufReadPre *.rs" },
     config = function()
         local lldb_ext = vim.env.HOME .. '/.local/share/nvim/mason/packages/codelldb/extension/'
         local opts = {
@@ -35,6 +35,10 @@ return {
                                 '-D', 'clippy::perf',
                                 '-D', 'clippy::style',
                             }
+                        },
+                        cargo = {
+                            buildScripts = true,
+                            allFeatures = true,
                         },
                         completion = {
                             snippets = {

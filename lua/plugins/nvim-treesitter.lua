@@ -1,8 +1,24 @@
 return {
     'nvim-treesitter/nvim-treesitter',
+    -- ft = (function()
+    --     local dir = vim.env.XDG_DATA_HOME .. '/nvim/lazy/nvim-treesitter/parser-info'
+    --     local fx = require('functions')
+    --     local parsers = {}
+    --     for parser in string.gmatch(
+    --         fx.capture('/bin/ls -1 ' .. dir, true),
+    --         '([^.]*).revision\n'
+    --     ) do
+    --         if string.len(parser) > 0 then
+    --             table.insert(parsers, parser)
+    --         end
+    --     end
+    --
+    --     return parsers
+    -- end)(),
     config = function()
         require'nvim-treesitter.configs'.setup({
-            ignore_install = {}, -- List of parsers to ignore installing
+            ignore_install = {},
+            ensure_installed = {},
             highlight = {
                 enable = true,
                 disable = {
@@ -22,11 +38,8 @@ return {
                 },
             },
             textobjects = {
-                enable = true, -- false will disable the whole extension
+                enable = false, -- false will disable the whole extension
                 disable = {}, -- list of textobjects that will be disabled
-                -- Set this to true if you depend on 'textobjects' being enabled (like for indentation).
-                -- Using this option may slow down your editor, and you may see some duplicate highlights.
-                -- Instead of true it can also be a list of languages
                 additional_vim_regex_highlighting = false,
             },
             playground = {
