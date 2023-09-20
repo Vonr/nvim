@@ -1,5 +1,11 @@
 return {
-    'lewis6991/spaceless.nvim',
+    'svranesevic/spaceless.nvim',
     event = 'BufRead',
-    config = true
+    config = function()
+        require'spaceless'.setup({
+            ignore_filetypes = {
+                'markdown',
+            }
+        })
+    end
 }

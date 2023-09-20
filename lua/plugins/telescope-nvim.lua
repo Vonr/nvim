@@ -41,7 +41,7 @@ return {
         vim.keymap.set('n', 'gD', function() require'telescope.builtin'.lsp_type_definitions() end, { noremap = true, silent = true })
         vim.keymap.set('n', 'gd', function() require'telescope.builtin'.lsp_definitions() end, { noremap = true, silent = true })
         vim.keymap.set('n', 'gi', function() require'telescope.builtin'.lsp_implementations() end, { noremap = true, silent = true })
-        vim.keymap.set('n', 'go', function() require'telescope.builtin'.diagnostics() end, { noremap = true, silent = true })
+        vim.keymap.set('n', 'gs', function() require'telescope.builtin'.diagnostics() end, { noremap = true, silent = true })
         vim.keymap.set('n', 'gr', function() require'telescope.builtin'.lsp_references() end, { noremap = true, silent = true })
     end
 }

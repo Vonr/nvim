@@ -47,7 +47,7 @@ return {
                 if filetypes[vim.bo.filetype] ~= nil then
                     vim.cmd('FormatWrite')
                 else
-                    for _, client in ipairs(vim.lsp.get_active_clients()) do
+                    for _, client in ipairs(vim.lsp.get_clients()) do
                         local capabilities = client.config.capabilities.textDocument
                         if not capabilities or not capabilities.formatting then
                             return
@@ -55,7 +55,7 @@ return {
 
                         for _, lsp_name in ipairs(lsps) do
                             if client.name == lsp_name then
-                                vim.lsp.buf.format()
+                                vim.cmd('silent lua vim.lsp.buf.format()')
                                 return
                             end
                         end
