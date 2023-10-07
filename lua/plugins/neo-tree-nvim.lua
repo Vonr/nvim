@@ -1,35 +1,19 @@
 return {
     'nvim-neo-tree/neo-tree.nvim',
-    branch = "v2.x",
-    cmd = {
-        "Neotree",
-        "NeoTreeClose",
-        "NeoTreeFloat",
-        "NeoTreeFloatToggle",
-        "NeoTreeFocus",
-        "NeoTreeFocusToggle",
-        "NeoTreeLogs",
-        "NeoTreePasteConfig",
-        "NeoTreeReveal",
-        "NeoTreeRevealInSplit",
-        "NeoTreeRevealInSplitToggle",
-        "NeoTreeRevealToggle",
-        "NeoTreeSetLogLevel",
-        "NeoTreeShow",
-        "NeoTreeShowInSplit",
-        "NeoTreeShowInSplitToggle",
-        "NeoTreeShowToggle",
-    },
-    init = function()
-        vim.api.nvim_set_keymap('n', '<leader>n', '<cmd>NeoTreeFloatToggle<CR>', { noremap = true, silent = true })
-    end,
-    opts = {
-        filesystem = {
-            filtered_items = {
-                hide_dotfiles = false,
+    branch = "v3.x",
+    event = "BufEnter",
+    config = function()
+        vim.api.nvim_set_keymap('n', '<leader>n', '<cmd>Neotree filesystem reveal float<CR>', { noremap = true, silent = true })
+
+        require('neo-tree').setup({
+            filesystem = {
+                filtered_items = {
+                    visible = true,
+                },
+                hijack_netrw_behavior = 'open_current',
             },
-        },
-    },
+        })
+    end,
     dependencies = {
         "nvim-lua/plenary.nvim",
         "MunifTanjim/nui.nvim",
