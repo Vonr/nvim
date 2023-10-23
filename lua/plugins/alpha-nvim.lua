@@ -2,14 +2,13 @@ return {
     'goolord/alpha-nvim',
     lazy = true,
     init = function()
-        vim.api.nvim_create_augroup('AlphaLoad', { clear = true })
         vim.api.nvim_create_autocmd('BufEnter', {
-            group = 'AlphaLoad',
             callback = function()
                 if vim.fn.expand('%') == '' then
                     require'alpha'
+                    return true
                 end
-                vim.api.nvim_clear_autocmds({ group = 'AlphaLoad' })
+                return false
             end
         })
     end,
@@ -85,7 +84,7 @@ return {
         local buttons = {
             type = "group",
             val = {
-                button("e", "  Edit buffer", "<cmd>bd<CR>", {}),
+                button("i", "  Edit buffer", "<cmd>bd<CR>", {}),
                 button("n", "➕ New file", "<cmd>lua vim.ui.input({}, function(s) vim.cmd([[e ]] .. s) end)<CR>", {}),
                 button("f", "  Find file", "<cmd>lua require'telescope.builtin'.find_files()<CR>", {}),
                 button("r", "󰑓  Recently opened files", "<cmd>lua require'telescope.builtin'.oldfiles()<CR>", {}),
@@ -117,6 +116,19 @@ return {
                 margin = 5,
             },
         }
+
+        vim.api.nvim_create_autocmd("User", {
+            once = true,
+            pattern = "LazyVimStarted",
+            callback = function()
+                local stats = require("lazy").stats()
+                local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+                config.layout[5].val = "Loaded plugins in "
+                .. ms
+                .. "ms"
+                pcall(vim.cmd.AlphaRedraw)
+            end,
+        })
 
         require'alpha'.setup(config)
     end

@@ -19,6 +19,7 @@ M.show_documentation = function()
 end
 
 local old_nvim_cmd = vim.api.nvim_cmd
+---@diagnostic disable-next-line: duplicate-set-field
 vim.api.nvim_cmd = function(command, opt)
     return old_nvim_cmd(command, opt or {})
 end

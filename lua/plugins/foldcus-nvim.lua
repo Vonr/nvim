@@ -1,6 +1,5 @@
 return {
     dir = '~/.config/nvim/lua/plugins/dev/foldcus.nvim',
-    dev = true,
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     lazy = true,
     init = function()

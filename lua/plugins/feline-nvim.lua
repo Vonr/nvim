@@ -1,6 +1,6 @@
 return {
     'freddiehaddad/feline.nvim',
-    event = "UIEnter",
+    event = "VeryLazy",
     config = function()
         local lsp = require('feline.providers.lsp')
         local lsp_errors = 0
@@ -20,6 +20,7 @@ return {
         local vi_mode_colors
 
         if vim.g.colors_name == 'kanagawa' then
+            require('kanagawa')
             local palette = _G.Theme.palette
             local theme = _G.Theme.theme
             colors = {
@@ -329,4 +330,7 @@ return {
             force_inactive = force_inactive,
         })
     end,
+    dependencies = {
+        'kyazdani42/nvim-web-devicons',
+    }
 }

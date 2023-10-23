@@ -1,6 +1,6 @@
 return {
     'https://github.com/mrcjkb/haskell-tools.nvim',
-    ft = "haskell",
+    ft = { 'haskell', 'lhaskell', 'cabal', 'cabalproject' },
     branch = "2.x.x",
     config = function()
         local ht = require('haskell-tools')
@@ -20,6 +20,8 @@ return {
                 end,
             },
         }
+
+        ht.lsp.start()
 
         -- Suggested keymaps that do not depend on haskell-language-server:
         local bufnr = vim.api.nvim_get_current_buf()

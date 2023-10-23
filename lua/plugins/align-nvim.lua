@@ -1,6 +1,5 @@
 return {
-    dir = '~/.config/nvim/lua/plugins/dev/align.nvim',
-    dev = true,
+    dir = vim.env.HOME .. '/.config/nvim/lua/plugins/dev/align.nvim',
     lazy = true,
     init = function()
         local NS = { noremap = true, silent = true }
