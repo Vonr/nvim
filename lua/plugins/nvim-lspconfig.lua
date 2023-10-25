@@ -1,9 +1,9 @@
 return {
     'neovim/nvim-lspconfig',
-    event = 'BufRead',
+    event = { 'BufReadPre', 'BufNewFile' },
     config = function()
         ---@diagnostic disable: duplicate-set-field
-        local config = require'lspconfig'
+        local config = require 'lspconfig'
 
         -- logged to ~/.cache/nvim/lsp.log
         vim.lsp.set_log_level('ERROR')
@@ -92,13 +92,13 @@ return {
         })
         local lines_enabled = true
 
-        vim.keymap.set({'n', 'x'}, 'gx',  vim.lsp.buf.code_action,     { noremap = true, silent = true })
-        vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename,          { noremap = true, silent = true })
-        vim.keymap.set('n', '<C-k>',      vim.lsp.buf.signature_help,  { noremap = true, silent = true })
-        vim.keymap.set('n', '[g',         vim.diagnostic.goto_prev,    { noremap = true, silent = true })
-        vim.keymap.set('n', 'g[',         vim.diagnostic.goto_prev,    { noremap = true, silent = true })
-        vim.keymap.set('n', 'g]',         vim.diagnostic.goto_next,    { noremap = true, silent = true })
-        vim.keymap.set('n', ']g',         vim.diagnostic.goto_next,    { noremap = true, silent = true })
+        vim.keymap.set({ 'n', 'x' }, 'gx', vim.lsp.buf.code_action, { noremap = true, silent = true })
+        vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, { noremap = true, silent = true })
+        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, { noremap = true, silent = true })
+        vim.keymap.set('n', '[g', vim.diagnostic.goto_prev, { noremap = true, silent = true })
+        vim.keymap.set('n', 'g[', vim.diagnostic.goto_prev, { noremap = true, silent = true })
+        vim.keymap.set('n', 'g]', vim.diagnostic.goto_next, { noremap = true, silent = true })
+        vim.keymap.set('n', ']g', vim.diagnostic.goto_next, { noremap = true, silent = true })
         vim.keymap.set('n', '<Leader>vd', function()
             lines_enabled = not lines_enabled
             vim.diagnostic.config({
@@ -112,16 +112,14 @@ return {
 
         local function lazyLspPlugin(pattern, plugin)
             if type(pattern) == 'string' then
-                pattern = {pattern}
+                pattern = { pattern }
             end
-            local plugin_group = vim.api.nvim_create_augroup("lsp_" .. plugin, { clear = true })
-            vim.api.nvim_create_autocmd({'BufEnter', 'BufWinEnter'}, {
+            vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
                 pattern = pattern,
-                group = plugin_group,
+                once = true,
                 callback = function()
                     local _ = require(plugin)
-                    vim.cmd'LspStart'
-                    vim.api.nvim_clear_autocmds({ group = 'lsp' .. plugin })
+                    vim.cmd 'LspStart'
                 end,
             })
         end

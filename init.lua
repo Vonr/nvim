@@ -1,10 +1,10 @@
-require'functions'
-require'startup'
+require('functions')
+require('startup')
 
-require'filetypes'
-require'opts'
+require('filetypes')
+require('opts')
 
-require'plugins'
-require'binds'
-require'commands'
-require'autocommands'
+require('plugins')
+require('binds')
+require('commands')
+require('autocommands')

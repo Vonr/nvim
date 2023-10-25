@@ -17,7 +17,7 @@ return {
             },
             server = {
                 cmd = { "rust-analyzer" },
-                root_dir = require'lspconfig.util'.root_pattern('Cargo.toml'),
+                root_dir = require 'lspconfig.util'.root_pattern('Cargo.toml'),
                 standalone = true,
                 settings = {
                     ['rust-analyzer'] = {
@@ -49,95 +49,37 @@ return {
                                         description = 'Collects iterator into a Vec of an inferred type.',
                                         scope = 'expr',
                                     },
-                                    ['let Some else'] = {
-                                        postfix = 'lse',
-                                        prefix = 'lse',
-                                        body = 'let Some($1) = ${receiver} else {\n\t$2\n}',
+                                    ['Collect'] = {
+                                        postfix = 'cl',
+                                        body = '${receiver}.collect::<$1>()',
+                                        description = 'Collects iterator into a Vec of an inferred type.',
                                         scope = 'expr',
                                     },
-                                    ['if let Some'] = {
-                                        postfix = 'ils',
-                                        prefix = 'ils',
-                                        body = 'if let Some($1) = ${receiver} {\n\t$2\n}',
+                                    ['Filter Map Results'] = {
+                                        postfix = 'oks',
+                                        body = '${receiver}.filter_map(Result::ok)',
+                                        description =
+                                        'Filters an iterator of Results to Ok variants and maps it to its inner type.',
                                         scope = 'expr',
-                                    },
-                                    ['let Ok else'] = {
-                                        postfix = 'loe',
-                                        prefix = 'loe',
-                                        body = 'let Ok($1) = ${receiver} else {\n\t$2\n}',
-                                        scope = 'expr',
-                                    },
-                                    ['if let Ok'] = {
-                                        postfix = 'ilo',
-                                        prefix = 'ilo',
-                                        body = 'if let Ok($1) = ${receiver} {\n\t$2\n}',
-                                        scope = 'expr',
-                                    },
-                                    ['Match Option'] = {
-                                        postfix = 'mo',
-                                        body = 'match ${receiver} {\n\tSome(inner) => {\n\t\t$2\n\t},\n\tNone => {\n\t\t$3\n\t},\n}',
-                                        scope = 'expr',
-                                    },
-                                    ['Match Result'] = {
-                                        postfix = 'mr',
-                                        body = 'match ${receiver} {\n\tOk(inner) => {\n\t\t$2\n\t},\n\tErr(e) => {\n\t\t$3\n\t},\n}',
-                                        scope = 'expr',
-                                    },
-                                    ['const'] = {
-                                        postfix = 'const',
-                                        prefix = 'const',
-                                        body = '|_| ${receiver}',
-                                        description = 'Turns an expression into a closure that voids an input and returns the result of that expression.',
-                                        scope = 'expr',
-                                    },
-                                    ['Move const'] = {
-                                        postfix = 'mconst',
-                                        prefix = 'mconst',
-                                        body = 'move |_| ${receiver}',
-                                        description = 'Turns an expression into a move closure that voids an input and returns the result of that expression.',
-                                        scope = 'expr',
-                                    },
-                                    ['Closure'] = {
-                                        postfix = 'cls',
-                                        body = '|| ${receiver}',
-                                        description = 'Creates a closure from an expression.',
-                                        scope = 'expr',
-                                    },
-                                    ['Move Closure'] = {
-                                        postfix = 'mcls',
-                                        body = 'move || ${receiver}',
-                                        description = 'Creates a move closure from an expression.',
-                                        scope = 'expr',
-                                    },
-                                    ['Derive'] = {
-                                        prefix = 'der',
-                                        body = '#[derive($0)]',
-                                        scope = 'item',
                                     },
                                     ['Is Not Empty'] = {
-                                        postfix = {'nmt', 'is_not_empty'},
+                                        postfix = { 'nmt', 'is_not_empty' },
                                         body = '!${receiver}.is_empty()',
                                         scope = 'expr',
                                     },
                                     ['Is Empty'] = {
-                                        postfix = {'mt', 'is_empty'},
+                                        postfix = { 'mt', 'is_empty' },
                                         body = '${receiver}.is_empty()',
                                         scope = 'expr',
                                     },
-                                    ['into_iter'] = {
-                                        postfix = 'iit',
-                                        body = '${receiver}.into_iter()',
-                                        scope = 'expr',
-                                    },
                                     ['Wrap with new'] = {
-                                        postfix = 'wrn',
+                                        postfix = 'new',
                                         body = '$1::new(${receiver})$0',
                                         scope = 'expr',
                                     },
-                                    ['Forget'] = {
-                                        postfix = 'forget',
-                                        body = 'forget(${receiver})',
-                                        requires = 'std::mem::forget',
+                                    ['Drop'] = {
+                                        postfix = 'drop',
+                                        body = 'drop(${receiver})',
                                         scope = 'expr',
                                     },
                                 }
