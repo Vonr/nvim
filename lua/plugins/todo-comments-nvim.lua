@@ -1,5 +1,5 @@
 return {
     'folke/todo-comments.nvim',
-    event = 'BufRead',
+    event = { 'BufReadPost', 'BufNewFile' },
     config = true,
 }

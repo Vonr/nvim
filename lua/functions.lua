@@ -44,4 +44,46 @@ M.string_split = function(str, delim)
     return t
 end
 
+---@class MappingOptions
+---@field noremap          boolean?
+---@field silent           boolean?
+---@field buffer           boolean?
+---@field nowait           boolean?
+---@field script           boolean?
+---@field expr             boolean?
+---@field unique           boolean?
+---@field desc             string?
+---@field callback         function?
+---@field replace_keycodes boolean?
+
+---@class Mapping
+---@field mode     string | string[]
+---@field key      string | string[]
+---@field action   string
+---@field settings MappingOptions?
+
+---@param mappings Mapping[]
+M.map = function(mappings)
+    local NS = { noremap = true, silent = true }
+    for _, m in ipairs(mappings) do
+        local keys = {} --[[@as string[] ]]
+        if type(m.key) ~= 'table' then
+            keys = { m.key }
+        end
+
+        local modes = {}
+        if type(m.mode) ~= 'table' then
+            modes = { m.mode }
+        end
+
+        --[[@cast modes string[] ]]
+        for _, mode in ipairs(modes) do
+            --[[@cast keys string[] ]]
+            for _, key in ipairs(keys) do
+                vim.api.nvim_set_keymap(mode, key, m.action, m.settings or NS)
+            end
+        end
+    end
+end
+
 return M

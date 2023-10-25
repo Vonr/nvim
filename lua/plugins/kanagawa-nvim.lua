@@ -1,6 +1,6 @@
 return {
     'rebelot/kanagawa.nvim',
-    enabled = vim.g.colors_name == 'kanagawa',
+    cond = vim.g.colors_name == 'kanagawa',
     event = 'UIEnter',
     config = function()
         require('kanagawa').setup({

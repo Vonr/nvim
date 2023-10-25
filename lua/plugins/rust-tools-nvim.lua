@@ -2,7 +2,7 @@ return {
     'simrat39/rust-tools.nvim',
     event = { "BufReadPre *.rs" },
     config = function()
-        local lldb_ext = vim.env.HOME .. '/.local/share/nvim/mason/packages/codelldb/extension/'
+        local lldb_ext = vim.fn.stdpath('data') .. '/mason/packages/codelldb/extension/'
         local opts = {
             tools = {
                 autoSetHints = true,

@@ -1,6 +1,6 @@
 return {
     'mhdahmad/gruvbox.lua',
-    enabled = vim.g.colors_name == 'gruvbox',
+    cond = vim.g.colors_name == 'gruvbox',
     event = 'UIEnter',
     config = function()
         vim.cmd.colorscheme('gruvbox')

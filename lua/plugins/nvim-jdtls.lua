@@ -6,11 +6,11 @@ return {
 
         local config = {
             cmd = {
-                vim.env.HOME .. '/.config/nvim/lua/plugins/lspconfig/jdtls.sh',
+                vim.fn.stdpath('config') .. '/lua/plugins/lspconfig/jdtls.sh',
                 vim.env.HOME .. '/.cache/jdtls/' .. project_name,
             },
 
-            root_dir = require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew'}),
+            root_dir = require('jdtls.setup').find_root({ '.git', 'mvnw', 'gradlew' }),
 
             settings = {
                 java = {
@@ -29,7 +29,7 @@ return {
             },
         }
 
-        vim.api.nvim_create_autocmd({'BufEnter'}, {
+        vim.api.nvim_create_autocmd({ 'BufEnter' }, {
             pattern = { '*.java' },
             callback = function()
                 require('jdtls').start_or_attach(config)

@@ -16,8 +16,8 @@ return {
 
                     dap.adapters.dart = {
                         type = 'executable',
-                        command = vim.env.HOME .. '/.local/share/nvim/mason/packages/dart-debug-adapter/dart-debug-adapter',
-                        args = {'flutter'}
+                        command = vim.fn.stdpath('data') .. '/mason/packages/dart-debug-adapter/dart-debug-adapter',
+                        args = { 'flutter' }
                     }
                     dap.configurations.dart = {
                         {

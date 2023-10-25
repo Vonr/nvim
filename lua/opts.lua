@@ -1,22 +1,24 @@
-local b   = vim.b
-local g   = vim.g
-local wo  = vim.wo
-local bo  = vim.bo
-local opt = vim.opt
+local b           = vim.b
+local g           = vim.g
+local wo          = vim.wo
+local bo          = vim.bo
+local opt         = vim.opt
 
 -- Vim Globals
-g.mapleader   = ' '
-g.belloff     = 'all'
-g.undodir     = vim.env.HOME .. '/.cache/nvim/undodir'
-g.incsearch   = true
-g.autowrite   = true
-g.lazyredraw  = true
-g.backup      = false
-opt.swapfile  = false
+g.mapleader       = ' '
+g.belloff         = 'all'
+g.undodir         = vim.fn.stdpath('cache') .. '/undodir'
+g.incsearch       = true
+g.autowrite       = true
+g.lazyredraw      = true
+g.backup          = false
+opt.swapfile      = false
 opt.termguicolors = true
+
+---@type 'kanagawa' | 'gruvbox'
 vim.g.colors_name = 'kanagawa'
 
-local links = {
+local links       = {
     ['@lsp.type.namespace'] = '@namespace',
     ['@lsp.type.type'] = '@type',
     ['@lsp.type.class'] = '@type',
@@ -71,17 +73,14 @@ opt.iskeyword = '@,48-57,_,192-255'
 function vim.bset(name, value)
     bo[name], b[name] = value, value
 end
+
 local bset = vim.bset
 
 b.mapleader = ' ' -- mapleader is not in vim.bo
-bset('tabstop'    , 4   )
-bset('softtabstop', 4   )
-bset('shiftwidth' , 4   )
-bset('expandtab'  , true)
-bset('autoindent' , true)
-bset('undofile'   , true)
+bset('autoindent', true)
+bset('undofile', true)
 bset('smartindent', true)
-bset('cindent'    , true)
+bset('cindent', true)
 
 -- Vim Window-specifics
 wo.number         = true

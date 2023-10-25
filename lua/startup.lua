@@ -1,8 +1,11 @@
-package.path = package.path .. ';' .. vim.env.HOME .. '/.luarocks/share/lua/5.1/?/init.lua;' .. vim.env.HOME .. '/.luarocks/share/lua/5.1/?.lua'
+package.path             =
+    package.path .. ';' ..
+    vim.env.HOME .. '/.luarocks/share/lua/5.1/?/init.lua;' ..
+    vim.env.HOME .. '/.luarocks/share/lua/5.1/?.lua'
 
-vim.o.foldenable = false
+vim.o.foldenable         = false
 
-local g = vim.g
+local g                  = vim.g
 g.shell                  = '/usr/bin/dash'
 g.python_host_skip_check = 1
 g.python_host_prog       = '/usr/bin/python2'

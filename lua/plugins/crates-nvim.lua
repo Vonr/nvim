@@ -2,9 +2,9 @@ return {
     'saecki/crates.nvim',
     event = { "BufRead Cargo.toml" },
     config = function()
-        local crates = require'crates'
+        local crates = require 'crates'
         crates.setup()
         crates.show()
-        require'cmp'.setup.buffer({ sources = { { name = "crates" } } })
+        require 'cmp'.setup.buffer({ sources = { { name = "crates" } } })
     end
 }

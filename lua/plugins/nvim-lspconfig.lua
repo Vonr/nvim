@@ -3,7 +3,7 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
         ---@diagnostic disable: duplicate-set-field
-        local config = require 'lspconfig'
+        local config = require('lspconfig')
 
         -- logged to ~/.cache/nvim/lsp.log
         vim.lsp.set_log_level('ERROR')

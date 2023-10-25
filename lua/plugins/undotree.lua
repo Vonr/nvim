@@ -7,7 +7,12 @@ return {
         'UndotreeShow',
     },
     init = function()
-        vim.api.nvim_set_keymap('n', '<F5>', '<cmd>UndotreeToggle<CR><cmd>UndotreeFocus<CR>', { noremap = true, silent = true})
+        vim.api.nvim_set_keymap(
+            'n',
+            '<F5>',
+            '<cmd>UndotreeToggle<CR><cmd>UndotreeFocus<CR>',
+            { noremap = true, silent = true }
+        )
 
         if vim.fn.has("persistent_undo") then
             local target_path = vim.fn.expand(vim.env.HOME .. '/.vim/undodir')
