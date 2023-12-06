@@ -63,13 +63,5 @@ return {
                 },
             }
         })
-
-        vim.api.nvim_create_autocmd('BufWritePre', {
-            pattern = { '*.dart' },
-            callback = function()
-                vim.lsp.buf.format()
-                vim.notify('tried to format')
-            end
-        })
     end
 }

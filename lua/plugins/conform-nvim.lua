@@ -1,9 +1,16 @@
 local formatters = {
     javascript = { { 'prettierd', 'prettier' } },
     typescript = { { 'prettierd', 'prettier' } },
+    javascriptreact = { { 'prettierd', 'prettier' } },
+    typescriptreact = { { 'prettierd', 'prettier' } },
     dart = { 'dart_format' },
     c = { 'clang_format' },
     cpp = { 'clang_format' },
+}
+
+local disabled = {
+    'haskell-tools.nvim',
+    'tsserver',
 }
 
 return {
@@ -18,6 +25,15 @@ return {
             format_on_save = {
                 lsp_fallback = true,
                 timeout_ms = 500,
+                filter = function(client)
+                    for _, name in ipairs(disabled) do
+                        if name == client.name then
+                            return false
+                        end
+                    end
+
+                    return true
+                end
             },
         })
     end

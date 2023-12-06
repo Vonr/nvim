@@ -128,7 +128,7 @@ return {
     end,
     dependencies = {
         {
-            'ErichDonGubler/lsp_lines.nvim',
+            'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
             lazy = true,
             config = true,
         },

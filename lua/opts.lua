@@ -1,24 +1,29 @@
-local b           = vim.b
-local g           = vim.g
-local wo          = vim.wo
-local bo          = vim.bo
-local opt         = vim.opt
+local b            = vim.b
+local g            = vim.g
+local bo           = vim.bo
+local opt          = vim.opt
 
 -- Vim Globals
-g.mapleader       = ' '
-g.belloff         = 'all'
-g.undodir         = vim.fn.stdpath('cache') .. '/undodir'
-g.incsearch       = true
-g.autowrite       = true
-g.lazyredraw      = true
-g.backup          = false
-opt.swapfile      = false
-opt.termguicolors = true
+g.mapleader        = ' '
+g.belloff          = 'all'
+g.undodir          = vim.fn.stdpath('cache') .. '/undodir'
+g.incsearch        = true
+g.autowrite        = true
+g.lazyredraw       = true
+g.backup           = false
+opt.swapfile       = false
+opt.termguicolors  = true
+opt.number         = true
+opt.relativenumber = true
+opt.signcolumn     = 'number'
+opt.wrap           = false
+opt.sidescrolloff  = 10
+opt.scrolloff      = 6
 
 ---@type 'kanagawa' | 'gruvbox'
-vim.g.colors_name = 'kanagawa'
+vim.g.colors_name  = 'kanagawa'
 
-local links       = {
+local links        = {
     ['@lsp.type.namespace'] = '@namespace',
     ['@lsp.type.type'] = '@type',
     ['@lsp.type.class'] = '@type',
@@ -68,7 +73,6 @@ opt.whichwrap = {
 }
 opt.iskeyword = '@,48-57,_,192-255'
 
-
 -- Vim Buffer-specifics
 function vim.bset(name, value)
     bo[name], b[name] = value, value
@@ -81,11 +85,3 @@ bset('autoindent', true)
 bset('undofile', true)
 bset('smartindent', true)
 bset('cindent', true)
-
--- Vim Window-specifics
-wo.number         = true
-wo.relativenumber = true
-wo.signcolumn     = 'number'
-wo.wrap           = false
-wo.sidescrolloff  = 10
-wo.scrolloff      = 6

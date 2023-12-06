@@ -7,11 +7,11 @@ _G.getTrimmedExtension = function(path, charsToTrim)
     ---@diagnostic disable-next-line: redundant-value
     vim.filetype.add({
         extension = {
-            ['gradle']  = 'groovy',
-            ['cl']      = 'c',
-            ['wgsl']    = 'wgsl',
-            ['hlsl']    = 'hlsl',
-            ['postcss'] = 'css',
+            gradle  = 'groovy',
+            cl      = 'c',
+            wgsl    = 'wgsl',
+            hlsl    = 'hlsl',
+            postcss = 'scss',
         },
         filename = {
             ['picom.conf'] = 'yaml',

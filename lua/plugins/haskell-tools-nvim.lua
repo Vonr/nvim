@@ -9,8 +9,11 @@ return {
             hls = {
                 name = "hls",
                 filetype = { "haskell" },
-                cmd = {"haskell-language-server-wrapper", "--lsp"},
-                on_attach = function(_, bufnr)
+                cmd = { "haskell-language-server-wrapper", "--lsp" },
+                on_attach = function(client, bufnr)
+                    client.resolved_capabilities.document_formatting = false
+                    vim.print(client.resolved_capabilities)
+
                     local opts = vim.tbl_extend('keep', def_opts, { buffer = bufnr })
                     -- haskell-language-server relies heavily on codeLenses,
                     -- so auto-refresh (see advanced configuration) is enabled by default

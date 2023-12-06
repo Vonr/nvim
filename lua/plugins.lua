@@ -12,6 +12,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 return require('lazy').setup('plugins', {
+    change_detection = {
+        enabled = true,
+        notify = false,
+    },
     performance = {
         reset_packpath = true,
         rtp = {
@@ -39,5 +43,9 @@ return require('lazy').setup('plugins', {
                 'matchit'
             },
         },
+    },
+    profiling = {
+        loader = false,
+        require = true,
     },
 })
