@@ -1,23 +1,22 @@
 return {
-    'simrat39/rust-tools.nvim',
-    event = { "BufReadPre *.rs" },
-    config = function()
-        local lldb_ext = vim.fn.stdpath('data') .. '/mason/packages/codelldb/extension/'
+    'mrcjkb/rustaceanvim',
+    version = '^3',
+    ft = { 'rust' },
+    init = function()
         local opts = {
             tools = {
                 autoSetHints = true,
-                executor = require("rust-tools/executors").termopen,
-                on_initialized = function(_) vim.notify("rust-analyzer started") end,
-                inlay_hints = {
-                    auto = true,
-                },
+                on_initialized = function(_)
+                    vim.lsp.inlay_hint.enable()
+                    vim.notify("rust-analyzer started")
+                end,
                 runnables = {
                     use_telescope = true
                 },
             },
             server = {
-                cmd = { "rust-analyzer" },
-                root_dir = require 'lspconfig.util'.root_pattern('Cargo.toml'),
+                cmd = { 'rust-analyzer' },
+                root_dir = require('lspconfig.util').root_pattern('Cargo.toml'),
                 standalone = true,
                 settings = {
                     ['rust-analyzer'] = {
@@ -88,18 +87,12 @@ return {
                     }
                 }
             },
-            dap = {
-                adapter = require('rust-tools.dap').get_codelldb_adapter(
-                    lldb_ext .. 'adapter/codelldb',
-                    lldb_ext .. 'lldb/lib/liblldb.so'
-                )
-            },
         }
 
         vim.g.rustfmt_autosave = 1
 
-        vim.api.nvim_set_keymap("n", "<S-K>", "<cmd>RustHoverActions<CR>", { noremap = true, silent = true })
+        vim.api.nvim_set_keymap("n", "<S-K>", "<cmd>RustLsp hover actions<CR>", { noremap = true, silent = true })
 
-        require('rust-tools').setup(opts)
+        vim.g.rustaceanvim = opts
     end,
 }

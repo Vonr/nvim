@@ -125,6 +125,15 @@ return {
         end
 
         lazyLspPlugin('*.go', 'go')
+
+        -- Inlay Hints (Neovim 0.10+)
+        if vim.fn.has('nvim-0.10') then
+            vim.api.nvim_create_autocmd('LspAttach', {
+                callback = function()
+                    vim.lsp.inlay_hint.enable()
+                end
+            })
+        end
     end,
     dependencies = {
         {
