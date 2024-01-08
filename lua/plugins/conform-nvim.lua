@@ -1,8 +1,8 @@
 local formatters = {
-    javascript = { { 'prettierd', 'prettier' } },
-    typescript = { { 'prettierd', 'prettier' } },
-    javascriptreact = { { 'prettierd', 'prettier' } },
-    typescriptreact = { { 'prettierd', 'prettier' } },
+    javascript = { 'prettier' },
+    typescript = { 'prettier' },
+    javascriptreact = { 'prettier' },
+    typescriptreact = { 'prettier' },
     dart = { 'dart_format' },
     c = { 'clang_format' },
     cpp = { 'clang_format' },
