@@ -3,7 +3,7 @@ return {
     event = { 'BufReadPost', 'BufNewFile', 'BufWritePre', 'VeryLazy' },
     config = function()
         ---@diagnostic disable-next-line: missing-fields
-        require'nvim-treesitter.configs'.setup({
+        require('nvim-treesitter.configs').setup({
             ignore_install = {},
             ensure_installed = {},
             highlight = {
@@ -27,7 +27,6 @@ return {
             textobjects = {
                 enable = true,
                 disable = {},
-                additional_vim_regex_highlighting = false,
                 select = {
                     enable = true,
                     lookahead = true,
@@ -38,7 +37,7 @@ return {
                     },
                     selection_modes = {
                         ['@parameter.outer'] = 'v', -- charwise
-                        ['@function.outer'] = 'V', -- linewise
+                        ['@function.outer'] = 'V',  -- linewise
                         ['@class.outer'] = '<c-v>', -- blockwise
                     },
                     include_surrounding_whitespace = true,
@@ -68,6 +67,17 @@ return {
                 enable = true,
             },
         })
+
+        local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+        ---@diagnostic disable-next-line: inject-field
+        parser_config.sfml = {
+            install_info = {
+                url = '~/git/tree-sitter-sfml',
+                files = { 'src/parser.c' },
+            },
+            filetype = 'sfml',
+        }
+        vim.treesitter.language.register('sfml', 'sfml')
 
         -- Custom highlights
         vim.api.nvim_set_hl(0, "@type.qualifier.dart", { link = "Label" })

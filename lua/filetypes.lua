@@ -12,6 +12,8 @@ _G.getTrimmedExtension = function(path, charsToTrim)
             wgsl    = 'wgsl',
             hlsl    = 'hlsl',
             postcss = 'scss',
+            pine    = 'pinescript',
+            sfml    = 'sfml'
         },
         filename = {
             ['picom.conf'] = 'yaml',

@@ -52,7 +52,7 @@ return {
 
         local configs = {
             bashls        = default,
-            tsserver      = default,
+            ts_ls         = default,
             cssls         = default,
             emmet_ls      = default,
             ccls          = default,
@@ -64,6 +64,7 @@ return {
             eslint        = default,
             wgsl_analyzer = default,
             tailwindcss   = default,
+            dockerls      = default,
             gopls         = external('go'),
             html          = external('html'),
             lua_ls        = external('lua_ls'),
@@ -127,13 +128,13 @@ return {
         lazyLspPlugin('*.go', 'go')
 
         -- Inlay Hints (Neovim 0.10+)
-        if vim.fn.has('nvim-0.10') then
-            vim.api.nvim_create_autocmd('LspAttach', {
-                callback = function()
-                    vim.lsp.inlay_hint.enable()
-                end
-            })
-        end
+        -- if vim.fn.has('nvim-0.10') then
+        --     vim.api.nvim_create_autocmd('LspAttach', {
+        --         callback = function()
+        --             vim.lsp.inlay_hint.enable()
+        --         end
+        --     })
+        -- end
     end,
     dependencies = {
         {
