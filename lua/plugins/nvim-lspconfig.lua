@@ -65,6 +65,7 @@ return {
             wgsl_analyzer = default,
             tailwindcss   = default,
             dockerls      = default,
+            astro         = default,
             gopls         = external('go'),
             html          = external('html'),
             lua_ls        = external('lua_ls'),

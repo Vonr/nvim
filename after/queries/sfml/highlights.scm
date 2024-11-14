@@ -16,8 +16,9 @@
 [ (LABEL) (BLOCK) ] @type.builtin
 [ (COMMA) (COLON) (DASH) ] @punctuation.delimiter
 [ (TOP) (BOTTOM) (NORTH) (EAST) (SOUTH) (WEST) ] @constant.builtin
-(resourceid (REDSTONE)) @type (#set! priority 105)
+((resourceid (REDSTONE)) @type (#set! priority 105))
+
+((ERROR) @comment.error (#set! priority 150))
 
 (trigger (interval [ (TICK) (TICKS) (SECONDS) ] @type.builtin (#set! priority 105)))
 (trigger interval: (redstonepulse) @type.builtin (#set! priority 105))
-

@@ -12,7 +12,7 @@ _G.getTrimmedExtension = function(path, charsToTrim)
             wgsl    = 'wgsl',
             hlsl    = 'hlsl',
             postcss = 'scss',
-            pine    = 'pinescript',
+            mdx     = 'markdown',
             sfml    = 'sfml'
         },
         filename = {
