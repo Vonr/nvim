@@ -1,6 +1,6 @@
 return {
     'freddiehaddad/feline.nvim',
-    event = "VeryLazy",
+    event = "UIEnter",
     config = function()
         local lsp = require('feline.providers.lsp')
         local lsp_errors = 0
@@ -24,16 +24,16 @@ return {
             local palette = _G.Theme.palette
             local theme = _G.Theme.theme
             colors = {
-                bg        = theme.ui.bg,
-                yellow    = theme.syn.identifier,
-                cyan      = theme.diag.info,
-                green     = palette.springGreen,
-                orange    = palette.lotusOrange2,
-                violet    = palette.dragonViolet,
-                white     = theme.ui.fg_dim,
-                fg        = theme.ui.fg,
-                skyblue   = theme.diag.hint,
-                red       = palette.peachRed,
+                bg      = theme.ui.bg,
+                yellow  = theme.syn.identifier,
+                cyan    = theme.diag.info,
+                green   = palette.springGreen,
+                orange  = palette.lotusOrange2,
+                violet  = palette.dragonViolet,
+                white   = theme.ui.fg_dim,
+                fg      = theme.ui.fg,
+                skyblue = theme.diag.hint,
+                red     = palette.peachRed,
             }
 
             vi_mode_colors = {
@@ -245,19 +245,19 @@ return {
 
                     {
                         provider = function()
-                            local filename = vim.fn.expand('%:t')
+                            local filename  = vim.fn.expand('%:t')
                             local extension = vim.fn.expand('%:e')
-                            local icon  = require'nvim-web-devicons'.get_icon(filename, extension)
+                            local icon      = require 'nvim-web-devicons'.get_icon(filename, extension)
                             if icon == nil then
                                 icon = ''
                             end
                             return icon
                         end,
                         hl = function()
-                            local val = {}
-                            local filename = vim.fn.expand('%:t')
-                            local extension = vim.fn.expand('%:e')
-                            local icon, name  = require'nvim-web-devicons'.get_icon(filename, extension)
+                            local val        = {}
+                            local filename   = vim.fn.expand('%:t')
+                            local extension  = vim.fn.expand('%:e')
+                            local icon, name = require 'nvim-web-devicons'.get_icon(filename, extension)
                             if icon ~= nil then
                                 val.fg = vim.fn.synIDattr(vim.fn.hlID(name), 'fg')
                             else
@@ -273,10 +273,10 @@ return {
                     {
                         provider = 'file_type',
                         hl = function()
-                            local val = {}
-                            local filename = vim.fn.expand('%:t')
-                            local extension = vim.fn.expand('%:e')
-                            local icon, name  = require'nvim-web-devicons'.get_icon(filename, extension)
+                            local val        = {}
+                            local filename   = vim.fn.expand('%:t')
+                            local extension  = vim.fn.expand('%:e')
+                            local icon, name = require 'nvim-web-devicons'.get_icon(filename, extension)
                             if icon ~= nil then
                                 val.fg = vim.fn.synIDattr(vim.fn.hlID(name), 'fg')
                             else

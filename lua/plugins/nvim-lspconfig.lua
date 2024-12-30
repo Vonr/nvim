@@ -58,7 +58,9 @@ return {
             ccls          = default,
             svelte        = default,
             prismals      = default,
-            pylsp         = default,
+            -- pylsp         = default,
+            ruff          = external('ruff'),
+            basedpyright  = external('pyright'),
             texlab        = default,
             zls           = default,
             eslint        = default,
@@ -70,6 +72,16 @@ return {
             html          = external('html'),
             lua_ls        = external('lua_ls'),
         }
+
+        for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
+            local default_diagnostic_handler = vim.lsp.handlers[method]
+            vim.lsp.handlers[method] = function(err, result, context, cfg)
+                if err ~= nil and err.code == -32802 then
+                    return
+                end
+                return default_diagnostic_handler(err, result, context, cfg)
+            end
+        end
 
         local lua_loaded = false
         vim.api.nvim_create_autocmd('FileType', {

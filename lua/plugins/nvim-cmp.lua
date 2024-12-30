@@ -4,7 +4,7 @@ return {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     config = function()
-        local cmp = require'cmp'
+        local cmp = require('cmp')
 
         local has_words_before = function()
             unpack = unpack or table.unpack
@@ -15,7 +15,7 @@ return {
         cmp.setup({
             snippet = {
                 expand = function(args)
-                    require'luasnip'.lsp_expand(args.body)
+                    require('luasnip').lsp_expand(args.body)
                 end
             },
 
@@ -33,38 +33,38 @@ return {
                 ['<C-e>'] = cmp.mapping.abort(),
 
                 ['<C-n>'] = cmp.mapping(function(fallback)
-                    if require'luasnip'.jumpable(1) then
-                        require'luasnip'.jump(1)
-                    elseif require'luasnip'.expand_or_locally_jumpable() then
-                        require'luasnip'.expand_or_jump()
+                    if require('luasnip').jumpable(1) then
+                        require('luasnip').jump(1)
+                    elseif require('luasnip').expand_or_locally_jumpable() then
+                        require('luasnip').expand_or_jump()
                     elseif cmp.visible() then
                         cmp.select_next_item()
                     else
                         fallback()
                     end
-                end, {'i', 's'}),
+                end, { 'i', 's' }),
 
                 ['<Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
-                    elseif require'luasnip'.expand_or_locally_jumpable() then
-                        require'luasnip'.expand_or_jump()
+                    elseif require('luasnip').expand_or_locally_jumpable() then
+                        require('luasnip').expand_or_jump()
                     elseif has_words_before() then
                         cmp.complete()
                     else
                         fallback()
                     end
-                end, {'i', 's'}),
+                end, { 'i', 's' }),
 
                 ['<C-p>'] = cmp.mapping(function(fallback)
-                    if require'luasnip'.jumpable(-1) then
-                        require'luasnip'.jump(-1)
+                    if require('luasnip').jumpable(-1) then
+                        require('luasnip').jump(-1)
                     elseif cmp.visible() then
                         cmp.select_prev_item()
                     else
                         fallback()
                     end
-                end, {'i', 's'}),
+                end, { 'i', 's' }),
 
                 ['<S-Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
@@ -72,23 +72,23 @@ return {
                     else
                         fallback()
                     end
-                end, {'i', 's'}),
+                end, { 'i', 's' }),
 
                 ['<S-Right>'] = cmp.mapping(function(fallback)
-                    if require'luasnip'.jumpable(1) then
-                        require'luasnip'.jump(1)
+                    if require('luasnip').jumpable(1) then
+                        require('luasnip').jump(1)
                     else
                         fallback()
                     end
-                end, {'i', 's'}),
+                end, { 'i', 's' }),
 
                 ['<S-Left>'] = cmp.mapping(function(fallback)
-                    if require'luasnip'.jumpable(-1) then
-                        require'luasnip'.jump(-1)
+                    if require('luasnip').jumpable(-1) then
+                        require('luasnip').jump(-1)
                     else
                         fallback()
                     end
-                end, {'i', 's'}),
+                end, { 'i', 's' }),
             },
 
             sources = {

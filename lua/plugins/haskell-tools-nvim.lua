@@ -1,18 +1,15 @@
 return {
-    'https://github.com/mrcjkb/haskell-tools.nvim',
+    'mrcjkb/haskell-tools.nvim',
     ft = { 'haskell', 'lhaskell', 'cabal', 'cabalproject' },
-    branch = "2.x.x",
+    version = "^4",
     config = function()
         local ht = require('haskell-tools')
         local def_opts = { noremap = true, silent = true }
         vim.g.haskell_tools = {
             hls = {
-                name = "hls",
-                filetype = { "haskell" },
                 cmd = { "haskell-language-server-wrapper", "--lsp" },
                 on_attach = function(client, bufnr)
-                    client.resolved_capabilities.document_formatting = false
-                    vim.print(client.resolved_capabilities)
+                    client.server_capabilities.documentFormattingProvider = false
 
                     local opts = vim.tbl_extend('keep', def_opts, { buffer = bufnr })
                     -- haskell-language-server relies heavily on codeLenses,
@@ -20,6 +17,7 @@ return {
                     vim.keymap.set('n', '<space>ca', vim.lsp.codelens.run, opts)
                     vim.keymap.set('n', '<space>hs', ht.hoogle.hoogle_signature, opts)
                     vim.keymap.set('n', '<space>ea', ht.lsp.buf_eval_all, opts)
+                    vim.keymap.set('n', 'gd', ht.lsp.goto_definition, opts)
                 end,
             },
         }
