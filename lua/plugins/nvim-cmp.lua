@@ -92,6 +92,7 @@ return {
             },
 
             sources = {
+                { name = 'luasnip' },
                 { name = 'nvim_lsp' },
                 { name = 'nvim_lsp_signature_help' },
                 { name = 'path' },
@@ -137,7 +138,6 @@ return {
         },
         {
             'saadparwaiz1/cmp_luasnip',
-            enabled = false,
             config = function()
                 require('cmp').register_source('luasnip', require('cmp_luasnip'))
             end,

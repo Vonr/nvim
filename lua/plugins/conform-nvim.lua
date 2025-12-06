@@ -1,10 +1,10 @@
 local prettier = { 'prettier_d', 'prettier', stop_after_first = true }
 
 local formatters = {
-    javascript = prettier,
-    typescript = prettier,
-    javascriptreact = prettier,
-    typescriptreact = prettier,
+    -- javascript = prettier,
+    -- typescript = prettier,
+    -- javascriptreact = prettier,
+    -- typescriptreact = prettier,
     dart = { 'dart_format' },
     c = { 'clang_format' },
     cpp = { 'clang_format' },
@@ -12,7 +12,7 @@ local formatters = {
 
 local disabled = {
     'haskell-tools.nvim',
-    'tsserver',
+    'ts_ls',
 }
 
 return {

@@ -8,7 +8,6 @@ return {
             if venn_enabled == "nil" then
                 vim.b.venn_enabled = true
                 vim.cmd[[setlocal ve=all]]
-                vim.cmd[[IndentBlanklineDisable]]
                 -- draw a line on HJKL keystokes
                 vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", {noremap = true})
                 vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", {noremap = true})
@@ -23,7 +22,6 @@ return {
             else
                 vim.cmd[[setlocal ve=]]
                 vim.cmd[[mapclear <buffer>]]
-                vim.cmd[[IndentBlanklineEnable]]
                 vim.b.venn_enabled = nil
             end
         end

@@ -3,7 +3,7 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
         ---@diagnostic disable: duplicate-set-field
-        local config = require('lspconfig')
+        local config = vim.lsp.config
 
         -- logged to ~/.cache/nvim/lsp.log
         vim.lsp.set_log_level('ERROR')
@@ -83,19 +83,18 @@ return {
             end
         end
 
-        local lua_loaded = false
-        vim.api.nvim_create_autocmd('FileType', {
-            pattern = 'lua',
-            callback = function()
-                if lua_loaded then return end
-                require("neodev").setup()
-                config['lua_ls'].setup(external('lua_ls'))
-                lua_loaded = true
-            end
-        })
+        -- local lua_loaded = false
+        -- vim.api.nvim_create_autocmd('FileType', {
+        --     pattern = 'lua',
+        --     callback = function()
+        --         if lua_loaded then return end
+        --         config['lua_ls'].setup(external('lua_ls'))
+        --         lua_loaded = true
+        --     end
+        -- })
 
         for server, opts in pairs(configs) do
-            config[server].setup(opts)
+            config[server].settings = opts
         end
 
         local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -148,6 +147,8 @@ return {
         --         end
         --     })
         -- end
+
+        vim.api.nvim_create_user_command('LspLog', [[lua vim.cmd('tabnew ' .. vim.lsp.get_log_path())]], {})
     end,
     dependencies = {
         {

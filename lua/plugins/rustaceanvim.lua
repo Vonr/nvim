@@ -36,6 +36,11 @@ return {
                                 '-D', 'clippy::style',
                             },
                         },
+                        diagnostics = {
+                            disabled = {
+                                "macro-error"
+                            },
+                        },
                         cargo = {
                             buildScripts = {
                                 enable = true
@@ -44,6 +49,12 @@ return {
                         },
                         procMacro = {
                             enable = true,
+                            ignored = {
+                                leptos_macro = {
+                                    "server",
+                                    "component",
+                                },
+                            },
                         },
                         completion = {
                             snippets = {
