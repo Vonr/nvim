@@ -27,9 +27,7 @@ return {
         vim.api.nvim_create_autocmd('FileType', {
             pattern = { '*' },
             callback = function()
-                local bufnr = vim.api.nvim_get_current_buf()
-
-                if vim.treesitter.language.get_lang(vim.bo[bufnr].filetype) ~= nil then
+                if vim.treesitter.get_parser() ~= nil then
                     vim.treesitter.start()
                 end
             end,
