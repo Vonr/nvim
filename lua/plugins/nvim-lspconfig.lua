@@ -14,7 +14,7 @@ return {
             lineFoldingOnly = true,
         }
 
-        capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+        -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
         capabilities.textDocument.codeAction = {
             dynamicRegistration = false,
