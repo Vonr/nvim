@@ -1,17 +1,22 @@
 return {
-    'phaazon/hop.nvim',
+    'smoka7/hop.nvim',
     lazy = true,
     init = function()
-        vim.keymap.set({'n', 'x', 'i'}, '<C-s>', function() require('hop').hint_char1({ direction = nil, current_line_only = false }) end, {})
-        vim.keymap.set({'n', 'x'}, '<Leader><C-s>', function() require('hop').hint_char1({ direction = nil, current_line_only = false }) end, {})
+        vim.keymap.set({ 'n', 'x', 'i' }, '<C-s>',
+            function() require('hop').hint_char1({ direction = nil, current_line_only = false }) end, {})
+        vim.keymap.set({ 'n', 'x' }, '<Leader><C-s>',
+            function() require('hop').hint_char1({ direction = nil, current_line_only = false }) end, {})
         vim.keymap.set('n', 'dqq', function() _G.hop_delete_to_char() end, {})
         vim.keymap.set('n', 'dqf', function() _G.hop_delete_to_char_line() end, {})
         vim.keymap.set('n', 'dqt', function() _G.hop_delete_until_char_line() end, {})
-        vim.keymap.set({'n', 'x'}, '<Leader>qw', function() require('hop').hint_words({ direction = nil, current_line_only = false }) end, {})
+        vim.keymap.set({ 'n', 'x' }, '<Leader>qw',
+            function() require('hop').hint_words({ direction = nil, current_line_only = false }) end, {})
         vim.keymap.set('n', 'dfw', function() _G.hop_delete_to_word() end, {})
-        vim.keymap.set({'n', 'x'}, '<Leader>qr', function() require('hop').hint_patterns({ direction = nil, current_line_only = false }) end, {})
+        vim.keymap.set({ 'n', 'x' }, '<Leader>qr',
+            function() require('hop').hint_patterns({ direction = nil, current_line_only = false }) end, {})
         vim.keymap.set('n', 'dqr', function() _G.hop_delete_to_pattern() end, {})
-        vim.keymap.set({'n', 'x'}, '<Leader>qe', function() require('hop').hint_anywhere({ direction = nil, current_line_only = false }) end, {})
+        vim.keymap.set({ 'n', 'x' }, '<Leader>qe',
+            function() require('hop').hint_anywhere({ direction = nil, current_line_only = false }) end, {})
         vim.keymap.set('n', 'dqe', function() _G.hop_delete_to_anywhere() end, {})
 
         local function delete_to(fn, opts, action)
@@ -30,16 +35,16 @@ return {
 
         _G.hop_delete_to_char_line = function()
             delete_to(
-            require('hop').hint_char1,
-            { direction = require('hop.hint').HintDirection.AFTER_CURSOR, current_line_only = true }
+                require('hop').hint_char1,
+                { direction = require('hop.hint').HintDirection.AFTER_CURSOR, current_line_only = true }
             )
         end
 
         _G.hop_delete_until_char_line = function()
             delete_to(
-            require('hop').hint_char1,
-            { direction = require('hop.hint').HintDirection.AFTER_CURSOR, current_line_only = true },
-            'hd'
+                require('hop').hint_char1,
+                { direction = require('hop.hint').HintDirection.AFTER_CURSOR, current_line_only = true },
+                'hd'
             )
         end
 

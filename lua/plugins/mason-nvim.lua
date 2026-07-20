@@ -1,5 +1,5 @@
 return {
-    'williamboman/mason.nvim',
+    'mason-org/mason.nvim',
     cmd = {
         'Mason',
         'MasonInstall',
@@ -10,7 +10,7 @@ return {
     config = true,
     dependencies = {
         {
-            'williamboman/mason-lspconfig.nvim',
+            'mason-org/mason-lspconfig.nvim',
             config = true,
         },
     }

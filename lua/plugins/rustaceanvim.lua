@@ -1,8 +1,9 @@
 return {
     'mrcjkb/rustaceanvim',
-    version = '^5',
+    version = '^9',
     ft = { 'rust' },
     init = function()
+        local rustaceanvim = require('rustaceanvim')
         ---@type rustaceanvim.Config
         vim.g.rustaceanvim = {
             ---@type rustaceanvim.tools.Config

@@ -1,92 +1,81 @@
 return {
     'nvim-treesitter/nvim-treesitter',
-    event = { 'BufReadPost', 'BufNewFile', 'BufWritePre', 'VeryLazy' },
+    branch = 'main',
+    lazy = false,
     config = function()
+        vim.g.no_plugin_maps = true
+
         ---@diagnostic disable-next-line: missing-fields
-        require('nvim-treesitter.configs').setup({
-            ignore_install = {},
-            ensure_installed = {},
-            highlight = {
-                enable = true,
-                disable = {
-                    'latex'
-                },
-                additional_vim_regex_highlighting = {
-                    'html'
-                },
-            },
-            incremental_selection = {
-                enable = false,
-                keymaps = {
-                    init_selection = "gnn",
-                    node_incremental = "grn",
-                    scope_incremental = "grc",
-                    node_decremental = "grm",
-                },
-            },
-            textobjects = {
-                enable = true,
-                disable = {},
-                select = {
-                    enable = true,
-                    lookahead = true,
-                    keymaps = {
-                        ["af"] = "@function.outer",
-                        ["if"] = "@function.inner",
-                        ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
-                    },
-                    selection_modes = {
-                        ['@parameter.outer'] = 'v', -- charwise
-                        ['@function.outer'] = 'V',  -- linewise
-                        ['@class.outer'] = '<c-v>', -- blockwise
-                    },
-                    include_surrounding_whitespace = true,
-                },
-                move = {
-                    enable = true,
-                    set_jumps = true,
-                    goto_next_start = {
-                        ["]f"] = "@function.outer",
-                        ["]]"] = { query = "@class.outer", desc = "Next class start" },
-                        ["]o"] = "@loop.*",
-                        ["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
-                    },
-                    goto_next_end = {},
-                    goto_previous_start = {
-                        ["[f"] = "@function.outer",
-                        ["[o"] = "@loop.*",
-                        ["[s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
-                        ["[["] = "@class.outer",
-                    },
-                    goto_previous_end = {},
-                    goto_next = {},
-                    goto_previous = {}
-                },
-            },
-            playground = {
-                enable = true,
-            },
+        require('nvim-treesitter').setup({
         })
 
-        local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
-        ---@diagnostic disable-next-line: inject-field
-        parser_config.sfml = {
+        ---@diagnostic disable-next-line: missing-fields
+        require('nvim-treesitter.parsers').sfml = {
+            ---@diagnostic disable-next-line: missing-fields
             install_info = {
-                url = '~/git/tree-sitter-sfml',
-                files = { 'src/parser.c' },
+                path = '~/git/tree-sitter-sfml',
+                location = 'parser',
+                generate = true,
+                generate_from_json = false,
             },
-            filetype = 'sfml',
         }
-        vim.treesitter.language.register('sfml', 'sfml')
 
         -- Custom highlights
         vim.api.nvim_set_hl(0, "@type.qualifier.dart", { link = "Label" })
         vim.api.nvim_set_hl(0, "@attribute.dart", { link = "Identifier" })
+
+        vim.api.nvim_create_autocmd('FileType', {
+            pattern = { '*' },
+            callback = function()
+                local bufnr = vim.api.nvim_get_current_buf()
+
+                if vim.treesitter.language.get_lang(vim.bo[bufnr].filetype) ~= nil then
+                    vim.treesitter.start()
+                end
+            end,
+        })
+
+
+        local to_bind = function(bind, qs, qg)
+            vim.keymap.set(
+                { "x", "o" },
+                bind,
+                function()
+                    require('nvim-treesitter-textobjects.select').select_textobject(qs, qg)
+                end
+            )
+        end
+
+        to_bind('af', '@function.outer', 'textobjects')
+        to_bind('if', '@function.inner', 'textobjects')
+        to_bind('ac', '@class.inner', 'textobjects')
+        to_bind('ic', '@class.outer', 'textobjects')
+        to_bind('as', '@local.scope', 'locals')
     end,
     dependencies = {
         {
             'nvim-treesitter/nvim-treesitter-textobjects',
+            branch = 'main',
             lazy = true,
+            keys = {
+                { mode = { 'x', 'o' }, 'af' },
+                { mode = { 'x', 'o' }, 'if' },
+                { mode = { 'x', 'o' }, 'ac' },
+                { mode = { 'x', 'o' }, 'ic' },
+                { mode = { 'x', 'o' }, 'as' },
+            },
+            config = function()
+                require("nvim-treesitter-textobjects").setup({
+                    select = {
+                        lookahead = true,
+                        selection_modes = {
+                            ['@parameter.outer'] = 'v',
+                            ['@function.outer'] = 'V',
+                        },
+                        include_surrounding_whitespace = false,
+                    },
+                })
+            end
         },
     }
 }

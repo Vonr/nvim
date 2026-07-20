@@ -1,12 +1,11 @@
 return {
     'neovim/nvim-lspconfig',
-    event = { 'BufReadPre', 'BufNewFile' },
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     config = function()
-        ---@diagnostic disable: duplicate-set-field
-        local config = vim.lsp.config
+        local lspconfig = require('lspconfig')
 
         -- logged to ~/.cache/nvim/lsp.log
-        vim.lsp.set_log_level('ERROR')
+        vim.lsp.log.set_level('ERROR')
 
         local capabilities = vim.lsp.protocol.make_client_capabilities()
 
@@ -71,6 +70,8 @@ return {
             gopls         = external('go'),
             html          = external('html'),
             lua_ls        = external('lua_ls'),
+            ltex          = vim.tbl_extend('force', default,
+                { on_attach = function() require('ltex_extra').setup({}) end }),
         }
 
         for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
@@ -94,7 +95,8 @@ return {
         -- })
 
         for server, opts in pairs(configs) do
-            config[server].settings = opts
+            vim.lsp.config(server, vim.tbl_deep_extend('force', require('lspconfig.configs.' .. server), default, opts))
+            vim.lsp.enable(server)
         end
 
         local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -108,10 +110,14 @@ return {
         vim.keymap.set({ 'n', 'x' }, 'gx', vim.lsp.buf.code_action, { noremap = true, silent = true })
         vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, { noremap = true, silent = true })
         vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, { noremap = true, silent = true })
-        vim.keymap.set('n', '[g', vim.diagnostic.goto_prev, { noremap = true, silent = true })
-        vim.keymap.set('n', 'g[', vim.diagnostic.goto_prev, { noremap = true, silent = true })
-        vim.keymap.set('n', 'g]', vim.diagnostic.goto_next, { noremap = true, silent = true })
-        vim.keymap.set('n', ']g', vim.diagnostic.goto_next, { noremap = true, silent = true })
+        vim.keymap.set('n', '[g', function() vim.diagnostic.jump({ count = -1, float = true }) end,
+            { noremap = true, silent = true })
+        vim.keymap.set('n', 'g[', function() vim.diagnostic.jump({ count = -1, float = true }) end,
+            { noremap = true, silent = true })
+        vim.keymap.set('n', 'g]', function() vim.diagnostic.jump({ count = 1, float = true }) end,
+            { noremap = true, silent = true })
+        vim.keymap.set('n', ']g', function() vim.diagnostic.jump({ count = 1, float = true }) end,
+            { noremap = true, silent = true })
         vim.keymap.set('n', '<Leader>vd', function()
             lines_enabled = not lines_enabled
             vim.diagnostic.config({
@@ -148,14 +154,14 @@ return {
         --     })
         -- end
 
-        vim.api.nvim_create_user_command('LspLog', [[lua vim.cmd('tabnew ' .. vim.lsp.get_log_path())]], {})
+        vim.api.nvim_create_user_command('LspLog', [[lua vim.cmd('tabnew ' .. vim.lsp.log.get_filename())]], {})
     end,
     dependencies = {
         {
             'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-            lazy = true,
             config = true,
         },
         'windwp/nvim-autopairs',
+        'mason-org/mason-lspconfig.nvim',
     }
 }
